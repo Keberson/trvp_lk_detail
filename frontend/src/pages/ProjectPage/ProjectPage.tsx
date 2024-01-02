@@ -33,7 +33,7 @@ const ProjectPage = () => {
                 </Card.Body>
             </Card>
             <NavLink to={"/login"} className={"w-50"}>
-                <Button className={"w-100"}>
+                <Button className={"w-100"} variant={"dark"}>
                     Login
                 </Button>
             </NavLink>

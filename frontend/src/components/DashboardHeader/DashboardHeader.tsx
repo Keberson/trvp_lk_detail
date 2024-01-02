@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from "react-bootstrap";
 import DashboardDate from "../../components/DashboardDate/DashboardDate";
 import getClasses from "../../utils/getClasses";
-import DashboardTitle from "../DashboardTitle";
+import DashboardTitle from "../DashboardTitle/DashboardTitle";
 
 interface IDashboardHeaderProps {
     currentDate: Date;

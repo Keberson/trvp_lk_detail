@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomTitle from "./CustomTitle/CustomTitle";
+import CustomTitle from "../CustomTitle/CustomTitle";
 import { Button } from "react-bootstrap";
 
 const DashboardTitle= () => {
