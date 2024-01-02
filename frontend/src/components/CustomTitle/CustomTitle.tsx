@@ -1,19 +1,20 @@
 import React, {JSX} from 'react';
+import getClasses from "../../utils/getClasses";
 
-interface CustomTitleProps {
+interface ICustomTitleProps {
     children: JSX.Element | string;
     className?: string;
 }
 
-const CustomTitle: React.FC<CustomTitleProps> = ({
+const CustomTitle: React.FC<ICustomTitleProps> = ({
     children,
     className
 }) => {
-    const classes = className !== undefined ? " " + className : "";
+    const classes = getClasses(className);
 
     return (
         <h3
-            className={"fw-bolder" + classes}
+            className={`fw-bolder ${classes}`}
         >
             {children}
         </h3>
