@@ -1,19 +1,19 @@
 import React from 'react';
-import { Card } from "react-bootstrap";
-import { IOrder } from "../../types/IOrder";
+import {Card} from "react-bootstrap";
+import {IOrder} from "../../types/IOrder";
 import OrdersTable from "../OrdersTable/OrdersTable";
 import getClasses from "../../utils/getClasses";
 
-interface IDashboardBodyProps {
+interface DashboardBodyProps {
     orders: IOrder[];
     className?: string;
 }
 
-const DashboardBody: React.FC<IDashboardBodyProps> = ({ orders, className }) => {
+const DashboardBody: React.FC<DashboardBodyProps> = ({ orders, className }) => {
     const classes = getClasses(className)
 
     return (
-        <Card className={`mh-100 p-4 overflow-auto ${classes}`}>
+        <Card className={`h-100 overflow-auto scrollbar-custom ${classes}`}>
             <OrdersTable orders={orders} />
         </Card>
     );

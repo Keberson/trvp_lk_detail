@@ -1,16 +1,16 @@
 import React from 'react';
-import { Table } from "react-bootstrap";
-import { IOrder } from "../../types/IOrder";
+import {Table} from "react-bootstrap";
+import {IOrder} from "../../types/IOrder";
 import OrdersRow from "../OrdersRow/OrdersRow";
 
-interface IOrdersTableProps {
+interface OrdersTableProps {
     orders: IOrder[];
 }
 
-const OrdersTable: React.FC<IOrdersTableProps> = ({ orders }) => {
+const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
     return (
-        <Table className={"mh-100"}>
-            <thead>
+        <Table className={"mh-100 overflow-auto"}>
+            <thead style={{ background: "#C0CFB2", color: "#FFF", position: "sticky", top: 0, zIndex: 2 }}>
                 <tr>
                     <th>Item ID</th>
                     <th>Customer</th>

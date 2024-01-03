@@ -1,10 +1,15 @@
-import React from 'react';
-import { Container } from "react-bootstrap";
+import React, {useState} from 'react';
+import {Container} from "react-bootstrap";
 import DashboardBody from "../../components/DashboardBody/DashboardBody";
 import DashboardHeader from "../../components/DashboardHeader/DashboardHeader";
-import { IOrder } from "../../types/IOrder";
+import ModalWindow from "../../components/ModalWindow/ModalWindow";
+import CreateOrder from "../../components/CreateOrder/CreateOrder";
+import EditOrder from "../../components/EditOrder/EditOrder";
+import {IOrder} from "../../types/IOrder";
+import {IProduct} from "../../types/IProduct";
 
 const DashboardPage = () => {
+    const [isShowModal, setIsShowModal] = useState<boolean>(false)
     const currentDate: Date = new Date();
     const orders: IOrder[] = [
         {
@@ -145,13 +150,44 @@ const DashboardPage = () => {
                 },
             ]
         },
-    ]
+    ];
+    const products: IProduct[] = [
+        {
+            id: 'PRODUCT001',
+            name: 'PRODUCT001'
+        },
+        {
+            id: 'PRODUCT002',
+            name: 'PRODUCT002'
+        },
+        {
+            id: 'PRODUCT003',
+            name: 'PRODUCT003'
+        },
+        {
+            id: 'PRODUCT004',
+            name: 'PRODUCT004'
+        },
+        {
+            id: 'PRODUCT005',
+            name: 'PRODUCT005'
+        },
+    ];
 
     return (
-        <Container className={"mh-100 d-flex flex-column"}>
-            <DashboardHeader currentDate={currentDate}/>
-            <DashboardBody className={"mt-5"} orders={orders} />
-        </Container>
+        <>
+            <Container className={"mh-100 d-flex flex-column"}>
+                <DashboardHeader currentDate={currentDate}/>
+                <DashboardBody className={"mt-5"} orders={orders} />
+            </Container>
+
+            <ModalWindow show={false} title={"Order Creation"} hide={() => setIsShowModal(false)}>
+                <CreateOrder products={products} />
+            </ModalWindow>
+            <ModalWindow show={false} title={"Edit Order"} hide={() => setIsShowModal(false)}>
+                <EditOrder order={orders[0]} products={products} />
+            </ModalWindow>
+        </>
     );
 }
 

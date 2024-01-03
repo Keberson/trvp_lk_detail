@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #E4E6D9;
 }
 
 code {
@@ -18,4 +19,51 @@ code {
 body, p, h3 {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+tr, th {
+  background: inherit !important;
+}
+
+tr th, td {
+  text-align: center;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 0 5px 5px 0;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  border-radius: 0 5px 5px 0;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #c0cfb2;
+  //background-image: -webkit-linear-gradient(330deg, #c0cfb2 0%, #6d8777 100%);
+  //background-image: linear-gradient(120deg, #c0cfb2 0%, #6d8777 100%);
+}
+
+.scrollbar-custom {
+  scrollbar-color: #c0cfb2 #F5F5F5;
+}
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
 }

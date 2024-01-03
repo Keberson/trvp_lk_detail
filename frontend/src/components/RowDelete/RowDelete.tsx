@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as DeleteRow } from "../../assets/deleteRow.svg";
+import {ReactComponent as DeleteRow} from "../../assets/deleteRow.svg";
 
 const RowDelete = () => {
     return (

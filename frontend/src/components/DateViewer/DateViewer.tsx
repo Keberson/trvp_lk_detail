@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface IDateViewerProps {
+interface DateViewerProps {
     currentDate: Date;
 }
 
-const DateViewer: React.FC<IDateViewerProps> = ({ currentDate }) => {
+const DateViewer: React.FC<DateViewerProps> = ({ currentDate }) => {
     const dateToView: string = currentDate.toLocaleDateString('ru')
 
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
-import { Card, Container } from 'react-bootstrap'
+import {NavLink} from "react-router-dom";
+import {Card, Container} from 'react-bootstrap'
 
 const NotFoundPage = () => {
     return (

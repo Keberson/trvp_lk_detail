@@ -1,13 +1,13 @@
 import React from 'react';
-import { IOrder } from "../../types/IOrder";
+import {IOrder} from "../../types/IOrder";
 import RowDelete from "../RowDelete/RowDelete";
 import OrderRows from "../OrderRows/OrderRows";
 
-interface IOrdersRowProps {
+interface OrdersRowProps {
     order: IOrder;
 }
 
-const OrdersRow: React.FC<IOrdersRowProps> = ({ order }) => {
+const OrdersRow: React.FC<OrdersRowProps> = ({ order }) => {
     return (
         <tr>
             <td className={"fw-bold"} style={{ cursor: "pointer" }}>{order.id}</td>

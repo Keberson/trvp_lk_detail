@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Container, Form, Button } from "react-bootstrap";
+import {Card, Container, Form, Button} from "react-bootstrap";
 import CustomTitle from "../../components/CustomTitle/CustomTitle";
 
 const LoginPage = () => {

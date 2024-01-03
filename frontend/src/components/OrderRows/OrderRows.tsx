@@ -1,12 +1,12 @@
 import React from 'react';
-import { IOrderRow } from "../../types/IOrderRow";
-import { ListGroup } from "react-bootstrap";
+import {IOrderRow} from "../../types/IOrderRow";
+import {ListGroup} from "react-bootstrap";
 
-interface IOrderRowsProps {
+interface OrderRowsProps {
     products: IOrderRow[];
 }
 
-const OrderRows: React.FC<IOrderRowsProps> = ({ products }) => {
+const OrderRows: React.FC<OrderRowsProps> = ({ products }) => {
     return (
         <ListGroup>
             {
