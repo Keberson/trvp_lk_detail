@@ -2,14 +2,16 @@ import React, {useState} from 'react';
 import {Container} from "react-bootstrap";
 import DashboardBody from "../../components/DashboardBody/DashboardBody";
 import DashboardHeader from "../../components/DashboardHeader/DashboardHeader";
-import ModalWindow from "../../components/ModalWindow/ModalWindow";
+import ModalWindow, {ModalSize} from "../../components/ModalWindow/ModalWindow";
 import CreateOrder from "../../components/CreateOrder/CreateOrder";
 import EditOrder from "../../components/EditOrder/EditOrder";
+import DeleteOrder from "../../components/DeleteOrder/DeleteOrder";
 import {IOrder} from "../../types/IOrder";
 import {IProduct} from "../../types/IProduct";
 
+
 const DashboardPage = () => {
-    const [isShowModal, setIsShowModal] = useState<boolean>(false)
+    const [isShowModal, setIsShowModal] = useState<boolean>(true)
     const currentDate: Date = new Date();
     const orders: IOrder[] = [
         {
@@ -186,6 +188,9 @@ const DashboardPage = () => {
             </ModalWindow>
             <ModalWindow show={false} title={"Edit Order"} hide={() => setIsShowModal(false)}>
                 <EditOrder order={orders[0]} products={products} />
+            </ModalWindow>
+            <ModalWindow show={false} title={"Edit Order"} hide={() => setIsShowModal(false)} size={ModalSize.small}>
+                <DeleteOrder orderID={orders[0].id}/>
             </ModalWindow>
         </>
     );
