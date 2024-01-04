@@ -87,8 +87,6 @@ class Connection {
             VALUES(gen_random_uuid(), ${row.product.id}, ${row.number}, '${order_id}');
         `
 
-        console.log(query)
-
         return (await this._connection.query(query))
     }
 }

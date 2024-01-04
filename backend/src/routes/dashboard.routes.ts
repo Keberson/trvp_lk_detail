@@ -47,8 +47,6 @@ router.post('/createOrder', authMiddleware, async(req: Request, res: Response): 
         order_date: data.order_date
     }));
 
-    console.log(order_id)
-
     for (const row of data.rows) {
         await db.insertRow(row, order_id);
     }
