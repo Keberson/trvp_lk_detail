@@ -67,8 +67,8 @@ router.patch('/editOrder', async (req: Request, res: Response): Promise<Response
     return res.status(200).json({message: "Successful edited order"});
 });
 
-router.delete('/deleteOrder', async (req: Request, res: Response): Promise<Response> => {
-    const order_id: string = req.body['order_id'];
+router.delete('/deleteOrder/:id', async (req: Request, res: Response): Promise<Response> => {
+    const order_id: string = req.params['id'];
     const got: IOrderInfo[] = await db.getOrder(order_id);
 
     if (got.length === 0) {
