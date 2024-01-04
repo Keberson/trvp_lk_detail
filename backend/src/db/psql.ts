@@ -1,10 +1,10 @@
 import pkg from 'pg';
 
-const {Pool} = pkg
-
 export default class Psql {
+    private _pool: pkg.Pool;
+
     constructor(settings) {
-        this._pool = new Pool({
+        this._pool = new pkg.Pool({
             user: settings.user,
             host: settings.host,
             database: settings.database,
@@ -14,7 +14,7 @@ export default class Psql {
         });
     }
 
-    async query(query) {
-        return await this._pool.query(query);
+    async query(query: string): Promise<any[]> {
+        return (await this._pool.query(query)).rows;
     }
 }
