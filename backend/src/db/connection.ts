@@ -7,6 +7,7 @@ import IProduct from "../types/IProdcut.js";
 import IOrderRowProduct from "../types/IOrderRowProduct.js";
 import IOrderRowRaw from "../types/IOrderRowRaw.js";
 import IOrderInfoRaw from "../types/IOrderInfoRaw.js";
+import IOrderRowFull from "../types/IOrderRowFull.js";
 
 class Connection {
     private readonly _settings: any;
@@ -85,6 +86,16 @@ class Connection {
             INSERT INTO order_row
             (id, product, "number", "order")
             VALUES(gen_random_uuid(), ${row.product.id}, ${row.number}, '${order_id}');
+        `
+
+        return (await this._connection.query(query))
+    }
+
+    async editRow(row: IOrderRowFull): Promise<void[]> {
+        const query: string = `
+            UPDATE order_row
+            SET "number"=${row.number}
+            WHERE id='${row.id}';
         `
 
         return (await this._connection.query(query))

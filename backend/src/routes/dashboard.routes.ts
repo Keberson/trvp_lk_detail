@@ -8,7 +8,9 @@ import IOrderRaw from "../types/IOrderRaw.js";
 
 const router: Router = Router();
 
-router.get('/getOrders', authMiddleware, async (req: Request, res: Response): Promise<Response> => {
+router.use(authMiddleware);
+
+router.get('/getOrders', async (req: Request, res: Response): Promise<Response> => {
     const fullOrders: IOrderRowProduct[] = await db.getFullOrder();
     const result: IOrderFull[] = [];
 
@@ -40,7 +42,7 @@ router.get('/getOrders', authMiddleware, async (req: Request, res: Response): Pr
     return res.status(200).json({result});
 });
 
-router.post('/createOrder', authMiddleware, async(req: Request, res: Response): Promise<Response> => {
+router.post('/createOrder', async(req: Request, res: Response): Promise<Response> => {
     const data: IOrderRaw = req.body;
     const order_id = (await db.insertOrder({
         customer: data.customer,
@@ -52,6 +54,16 @@ router.post('/createOrder', authMiddleware, async(req: Request, res: Response): 
     }
 
     return res.status(200).json({message: 'Successful created order'});
+});
+
+router.patch('/editOrder', async (req: Request, res: Response): Promise<Response> => {
+    const data: IOrderFull = req.body;
+
+    for (const row of data.rows) {
+        await db.editRow(row);
+    }
+
+    return res.status(200).json({message: "Successful edited order"});
 });
 
 export default router;
