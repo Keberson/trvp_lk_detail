@@ -5,6 +5,7 @@ import IOrderFull from "../types/IOrderFull.js";
 import IOrderRowProduct from "../types/IOrderRowProduct.js";
 import IOrderRowFull from "../types/IOrderRowFull.js";
 import IOrderRaw from "../types/IOrderRaw.js";
+import IOrderInfo from "../types/IOrderInfo.js";
 
 const router: Router = Router();
 
@@ -42,7 +43,7 @@ router.get('/getOrders', async (req: Request, res: Response): Promise<Response> 
     return res.status(200).json({result});
 });
 
-router.post('/createOrder', async(req: Request, res: Response): Promise<Response> => {
+router.post('/createOrder', async (req: Request, res: Response): Promise<Response> => {
     const data: IOrderRaw = req.body;
     const order_id = (await db.insertOrder({
         customer: data.customer,
@@ -64,6 +65,25 @@ router.patch('/editOrder', async (req: Request, res: Response): Promise<Response
     }
 
     return res.status(200).json({message: "Successful edited order"});
+});
+
+router.delete('/deleteOrder', async (req: Request, res: Response): Promise<Response> => {
+    const order_id: string = req.body['order_id'];
+    const got: IOrderInfo[] = await db.getOrder(order_id);
+
+    if (got.length === 0) {
+        return res.status(400).json({message: "Incorrect order id"});
+    }
+
+    await db.deleteOrder(order_id);
+
+    const deleted: IOrderInfo[] = await db.getOrder(order_id);
+
+    if (deleted.length !== 0) {
+        return res.status(500).json({message: "Something went wrong"});
+    }
+
+    return res.status(200).json({message: "Successful deleted order"});
 });
 
 export default router;

@@ -72,7 +72,7 @@ class Connection {
 
     async insertOrder(order: IOrderInfoRaw): Promise<string> {
         const query: string = `
-            INSERT INTO public.order_info
+            INSERT INTO order_info
             (id, customer, order_date)
             VALUES(gen_random_uuid(), '${order.customer}', '${order.order_date}')
             RETURNING id
@@ -96,6 +96,24 @@ class Connection {
             UPDATE order_row
             SET "number"=${row.number}
             WHERE id='${row.id}';
+        `
+
+        return (await this._connection.query(query))
+    }
+
+    async deleteOrder(order_id: string): Promise<void[]> {
+        const query: string = `
+            DELETE FROM order_info
+            WHERE id='${order_id}';
+        `
+
+        return (await this._connection.query(query))
+    }
+
+    async getOrder(order_id: string): Promise<IOrderInfo[]> {
+        const query: string = `
+            SELECT * FROM order_info
+            WHERE id='${order_id}';
         `
 
         return (await this._connection.query(query))
