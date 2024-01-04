@@ -189,7 +189,7 @@ const DashboardPage = () => {
             <ModalWindow show={false} title={"Edit Order"} hide={() => setIsShowModal(false)}>
                 <EditOrder order={orders[0]} products={products} />
             </ModalWindow>
-            <ModalWindow show={false} title={"Edit Order"} hide={() => setIsShowModal(false)} size={ModalSize.small}>
+            <ModalWindow show={false} title={"Delete Order"} hide={() => setIsShowModal(false)} size={ModalSize.small}>
                 <DeleteOrder orderID={orders[0].id}/>
             </ModalWindow>
         </>
