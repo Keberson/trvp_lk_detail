@@ -22,6 +22,7 @@ const DashboardPage = () => {
     const {isLoading: isLoadingProducts, error: errorProducts} = useGetProductsQuery();
     const orders: IOrder[] = useAppSelector(state => state.dashboard.orders);
     const products: IProduct[] = useAppSelector(state => state.dashboard.products);
+    const isLoadingShow: boolean = useAppSelector(state => state.utils.isLoadingShow) || isLoadingOrders || isLoadingProducts;
 
     return (
         <>
@@ -40,7 +41,7 @@ const DashboardPage = () => {
             {/*    <DeleteOrder orderID={orders[0].id}/>*/}
             {/*</ModalWindow>*/}
 
-            {(isLoadingOrders || isLoadingProducts) && <SpinnerCustom />}
+            {isLoadingShow && <SpinnerCustom />}
             {errorOrders && <ErrorAlert error={(errorOrders as TError).data.message}/>}
             {errorProducts && <ErrorAlert error={(errorProducts as TError).data.message}/>}
         </>

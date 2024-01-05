@@ -22,8 +22,8 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(userApi.endpoints.login.matchFulfilled, (state, action) => {
-                state.isAuth = true;
                 localStorage.setItem("jwt", action.payload.jwt);
+                state.isAuth = true;
             })
             .addMatcher(userApi.endpoints.login.matchRejected, (state) => {
                 state.isAuth = localStorage.getItem("jwt") != null

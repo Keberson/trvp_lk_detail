@@ -12,11 +12,13 @@ export const dashboardApi = createApi({
         credentials: 'same-origin',
         headers: new Headers({"Authorization": `Bearer ${localStorage.getItem("jwt")}`})
     }),
+    tagTypes: ['Post'],
     endpoints: (build) => ({
         getOrders: build.query<IOrdersResponse, void>({
             query: () => ({
                 url: '/getOrders',
-            })
+            }),
+            providesTags: ['Post']
         }),
         getProducts: build.query<IProductResponse, void>({
             query: () => ({
@@ -28,13 +30,22 @@ export const dashboardApi = createApi({
                 url: '/createOrder',
                 method: 'POST',
                 body: body
-            })
-        })
+            }),
+            invalidatesTags: () => ['Post']
+        }),
+        deleteOrder: build.mutation<IResponse, string>( {
+            query: (id) => ({
+                url: `/deleteOrder/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: () => ['Post']
+        }),
     })
 });
 
 export const {
     useGetOrdersQuery,
     useGetProductsQuery,
-    useCreateOrderMutation
+    useCreateOrderMutation,
+    useDeleteOrderMutation
 } = dashboardApi;

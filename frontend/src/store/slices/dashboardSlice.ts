@@ -27,12 +27,24 @@ export const dashboardSlice = createSlice({
             })
             .addMatcher(dashboardApi.endpoints.getOrders.matchRejected, (state, action) => {
                 state.orders = [];
+                if (action.payload && action.payload.status === 401) {
+                    // uu
+                }
             })
             .addMatcher(dashboardApi.endpoints.getProducts.matchFulfilled, (state, action) => {
                 state.products = action.payload.result;
             })
             .addMatcher(dashboardApi.endpoints.getProducts.matchRejected, (state, action) => {
                 state.products = [];
+                if (action.payload && action.payload.status === 401) {
+                    // useAppDispatch()(logout());
+                }
+            })
+            .addMatcher(dashboardApi.endpoints.createOrder.matchRejected, (state, action) => {
+                console.log(action.payload)
+                if (action.payload && action.payload.status === 401) {
+                    // useAppDS()(logout());
+                }
             })
     }
 })

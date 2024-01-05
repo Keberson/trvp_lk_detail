@@ -6,12 +6,15 @@ import {FormProvider, SubmitHandler, useFieldArray, useForm} from "react-hook-fo
 import {emptyRow} from "../../types/IOrderRowCreate";
 import IFormCreate from "../../types/IFormCreate";
 import {useCreateOrderMutation} from "../../services/DashboardService";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {toggleLoading} from "../../store/slices/utilsSlice";
 
 interface CreateOrderProps {
     products: IProduct[];
 }
 
 const CreateOrder: React.FC<CreateOrderProps> = ({ products }) => {
+    const dispatch = useAppDispatch();
     const methods = useForm<IFormCreate>();
     const {fields, append, remove} = useFieldArray({
         control: methods.control,
@@ -20,10 +23,12 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ products }) => {
             validate: (value) => value.length !== 0
         }
     });
-    const [createOrder, {isLoading, error}] = useCreateOrderMutation();
+    const [createOrder] = useCreateOrderMutation();
 
     const onSubmit: SubmitHandler<IFormCreate> = async (formData) => {
+        dispatch(toggleLoading());
         await createOrder({...formData});
+        dispatch(toggleLoading())
     };
 
     return (

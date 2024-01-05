@@ -4,13 +4,15 @@ import {userApi} from "../services/UserService";
 import authSlice from "./slices/authSlice";
 import dashboardSlice from "./slices/dashboardSlice";
 import {dashboardApi} from "../services/DashboardService";
+import utilsSlice from "./slices/utilsSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authSlice,
         [userApi.reducerPath]: userApi.reducer,
         dashboard: dashboardSlice,
-        [dashboardApi.reducerPath]: dashboardApi.reducer
+        [dashboardApi.reducerPath]: dashboardApi.reducer,
+        utils: utilsSlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(userApi.middleware).concat(dashboardApi.middleware)
