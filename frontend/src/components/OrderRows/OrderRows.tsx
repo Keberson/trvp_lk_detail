@@ -11,7 +11,7 @@ const OrderRows: React.FC<OrderRowsProps> = ({ products }) => {
         <ListGroup>
             {
                 products.map((orderRow) =>
-                    <ListGroup.Item action className={"text-center"}>
+                    <ListGroup.Item action className={"text-center"} key={orderRow.id}>
                         {orderRow.id} {orderRow.product.id} {orderRow.product.name} ✕ {orderRow.number}
                     </ListGroup.Item>
                 )

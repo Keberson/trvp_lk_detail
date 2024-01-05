@@ -5,11 +5,11 @@ import { Container } from "react-bootstrap";
 
 function App() {
   return (
-      <Container className={"p-5 h-100"}>
-          <BrowserRouter>
+      <BrowserRouter>
+          <Container className={"p-5 h-100"}>
               <AppRouter />
-          </BrowserRouter>
-      </Container>
+          </Container>
+      </BrowserRouter>
   );
 }
 
