@@ -10,6 +10,13 @@ interface OrdersTableProps {
 const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
     return (
         <Table className={"mh-100 overflow-auto"}>
+            <colgroup>
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "50%" }} />
+                <col style={{ width: "5%" }} />
+            </colgroup>
             <thead style={{ background: "#C0CFB2", color: "#FFF", position: "sticky", top: 0, zIndex: 2 }}>
                 <tr>
                     <th>Item ID</th>

@@ -1,8 +1,8 @@
 import { IOrderRow } from "./IOrderRow";
 
-export interface IOrder {
+export interface IOrderResponse {
     id: string;
     customer: string;
-    order_date: Date;
+    order_date: string;
     rows: IOrderRow[];
 }

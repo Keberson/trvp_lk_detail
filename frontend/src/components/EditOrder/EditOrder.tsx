@@ -21,7 +21,7 @@ const EditOrder: React.FC<EditOrderProps> = ({ order, products }) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="orderCreateDate">
                 <Form.Label>Order Date</Form.Label>
-                <Form.Control type="date" value={order.orderDate.toISOString().split('T')[0]}/>
+                <Form.Control type="date" value={order.order_date.toISOString().split('T')[0]}/>
             </Form.Group>
             <CreateProducts productsForms={productsForms} products={products} />
             <Button variant="dark" type="submit">

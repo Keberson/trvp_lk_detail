@@ -13,7 +13,7 @@ const ErrorAlert: React.FC<ErrorAlertProps> = ({ error }) => {
             <Toast.Header style={{ background: "rgba(255,179,179,0.9)" }}>
                 <strong className="me-auto">Error</strong>
             </Toast.Header>
-            <Toast.Body>{error}</Toast.Body>
+            <Toast.Body>{error ? error : "Something went wrong..."}</Toast.Body>
         </Toast>
     );
 };

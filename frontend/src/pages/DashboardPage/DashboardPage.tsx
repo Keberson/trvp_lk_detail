@@ -8,151 +8,18 @@ import EditOrder from "../../components/EditOrder/EditOrder";
 import DeleteOrder from "../../components/DeleteOrder/DeleteOrder";
 import {IOrder} from "../../types/IOrder";
 import {IProduct} from "../../types/IProduct";
+import {useGetOrdersQuery} from "../../services/OrderService";
+import SpinnerCustom from "../../components/SpinnerCustom/SpinnerCustom";
+import ErrorAlert from "../../components/ErrorAlert/ErrorAlert";
+import {TError} from "../../types/TError";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 
 const DashboardPage = () => {
     const [isShowModal, setIsShowModal] = useState<boolean>(true)
     const currentDate: Date = new Date();
-    const orders: IOrder[] = [
-        {
-            id: "ITEM001",
-            customer: "Customer1",
-            orderDate: new Date(),
-            rows: [
-                {
-                    id: "ROW001",
-                    product: {
-                        id: "PRODUCT001",
-                        name: "PRODUCT001"
-                    },
-                    number: 10
-                },
-                {
-                    id: "ROW002",
-                    product: {
-                        id: "PRODUCT002",
-                        name: "PRODUCT002"
-                    },
-                    number: 20
-                },
-            ]
-        },
-        {
-            id: "ITEM002",
-            customer: "Customer2",
-            orderDate: new Date(),
-            rows: [
-                {
-                    id: "ROW001",
-                    product: {
-                        id: "PRODUCT001",
-                        name: "PRODUCT001"
-                    },
-                    number: 10
-                },
-                {
-                    id: "ROW002",
-                    product: {
-                        id: "PRODUCT002",
-                        name: "PRODUCT002"
-                    },
-                    number: 20
-                },
-            ]
-        },
-        {
-            id: "ITEM002",
-            customer: "Customer2",
-            orderDate: new Date(),
-            rows: [
-                {
-                    id: "ROW001",
-                    product: {
-                        id: "PRODUCT001",
-                        name: "PRODUCT001"
-                    },
-                    number: 10
-                },
-                {
-                    id: "ROW002",
-                    product: {
-                        id: "PRODUCT002",
-                        name: "PRODUCT002"
-                    },
-                    number: 20
-                },
-            ]
-        },
-        {
-            id: "ITEM002",
-            customer: "Customer2",
-            orderDate: new Date(),
-            rows: [
-                {
-                    id: "ROW001",
-                    product: {
-                        id: "PRODUCT001",
-                        name: "PRODUCT001"
-                    },
-                    number: 10
-                },
-                {
-                    id: "ROW002",
-                    product: {
-                        id: "PRODUCT002",
-                        name: "PRODUCT002"
-                    },
-                    number: 20
-                },
-            ]
-        },
-        {
-            id: "ITEM002",
-            customer: "Customer2",
-            orderDate: new Date(),
-            rows: [
-                {
-                    id: "ROW001",
-                    product: {
-                        id: "PRODUCT001",
-                        name: "PRODUCT001"
-                    },
-                    number: 10
-                },
-                {
-                    id: "ROW002",
-                    product: {
-                        id: "PRODUCT002",
-                        name: "PRODUCT002"
-                    },
-                    number: 20
-                },
-            ]
-        },
-        {
-            id: "ITEM002",
-            customer: "Customer2",
-            orderDate: new Date(),
-            rows: [
-                {
-                    id: "ROW001",
-                    product: {
-                        id: "PRODUCT001",
-                        name: "PRODUCT001"
-                    },
-                    number: 10
-                },
-                {
-                    id: "ROW002",
-                    product: {
-                        id: "PRODUCT002",
-                        name: "PRODUCT002"
-                    },
-                    number: 20
-                },
-            ]
-        },
-    ];
+    const {isLoading, error} = useGetOrdersQuery();
+    const orders: IOrder[] = useAppSelector(state => state.order.orders);
     const products: IProduct[] = [
         {
             id: 'PRODUCT001',
@@ -187,11 +54,14 @@ const DashboardPage = () => {
                 <CreateOrder products={products} />
             </ModalWindow>
             <ModalWindow show={false} title={"Edit Order"} hide={() => setIsShowModal(false)}>
-                <EditOrder order={orders[0]} products={products} />
+                {/*<EditOrder order={orders[0]} products={products} />*/}
             </ModalWindow>
             <ModalWindow show={false} title={"Delete Order"} hide={() => setIsShowModal(false)} size={ModalSize.small}>
-                <DeleteOrder orderID={orders[0].id}/>
+                {/*<DeleteOrder orderID={orders[0].id}/>*/}
             </ModalWindow>
+
+            {isLoading && <SpinnerCustom />}
+            {error && <ErrorAlert error={(error as TError).data.message}/>}
         </>
     );
 }

@@ -8,11 +8,13 @@ interface OrdersRowProps {
 }
 
 const OrdersRow: React.FC<OrdersRowProps> = ({ order }) => {
+    console.log(order);
+
     return (
         <tr>
             <td className={"fw-bold"} style={{ cursor: "pointer" }}>{order.id}</td>
             <td style={{ cursor: "pointer" }}>{order.customer}</td>
-            <td style={{ cursor: "pointer" }}>{order.orderDate.toLocaleDateString('ru')}</td>
+            <td style={{ cursor: "pointer" }}>{order.order_date.toLocaleDateString('ru')}</td>
             <td>
                 <OrderRows products={order.rows} />
             </td>

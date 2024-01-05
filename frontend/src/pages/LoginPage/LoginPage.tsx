@@ -5,7 +5,7 @@ import {useLoginMutation} from "../../services/UserService";
 import SpinnerCustom from "../../components/SpinnerCustom/SpinnerCustom";
 import ErrorAlert from "../../components/ErrorAlert/ErrorAlert";
 import {useForm, SubmitHandler} from "react-hook-form";
-import {LoginError} from "../../store/slices/authSlice";
+import {TError} from "../../types/TError";
 
 interface IFormInput {
     login: string,
@@ -45,7 +45,7 @@ const LoginPage = () => {
                     </Card.Body>
                 </Card>
             </Container>
-            {error && <ErrorAlert error={(error as LoginError).data.message}/>}
+            {error && <ErrorAlert error={(error as TError).data.message}/>}
             {isLoading && <SpinnerCustom />}
         </>
     );
