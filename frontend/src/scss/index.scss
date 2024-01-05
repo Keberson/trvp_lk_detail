@@ -44,26 +44,13 @@ tr th, td {
   border-radius: 0 5px 5px 0;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #c0cfb2;
-  //background-image: -webkit-linear-gradient(330deg, #c0cfb2 0%, #6d8777 100%);
-  //background-image: linear-gradient(120deg, #c0cfb2 0%, #6d8777 100%);
 }
 
 .scrollbar-custom {
   scrollbar-color: #c0cfb2 #F5F5F5;
 }
 
-.table-fixed thead {
-  width: 97%;
+td {
+  cursor: pointer;
 }
-.table-fixed tbody {
-  height: 230px;
-  overflow-y: auto;
-  width: 100%;
-}
-.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
-  display: block;
-}
-.table-fixed tbody td, .table-fixed thead > tr> th {
-  float: left;
-  border-bottom-width: 0;
-}
+

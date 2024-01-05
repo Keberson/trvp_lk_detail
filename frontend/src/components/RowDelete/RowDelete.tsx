@@ -1,11 +1,17 @@
 import React from 'react';
 import {ReactComponent as DeleteRow} from "../../assets/deleteRow.svg";
 
-const RowDelete = () => {
+interface RowDeleteProps {
+    productsLength: number
+}
+
+const RowDelete: React.FC<RowDeleteProps> = ({ productsLength }) => {
     return (
-        <button style={{ padding: 0, background: "#FFF", outline: "none", border: "none", cursor: "pointer" }}>
-            <DeleteRow />
-        </button>
+        <td rowSpan={productsLength}>
+            <button className={"p-0 bg-white border-0 btn-outline"}>
+                <DeleteRow />
+            </button>
+        </td>
     );
 }
 

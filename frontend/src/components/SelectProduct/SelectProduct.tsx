@@ -1,18 +1,18 @@
 import React from 'react';
 import {Form} from "react-bootstrap";
 import {IProduct} from "../../types/IProduct";
+import {useFormContext} from "react-hook-form";
 
 interface SelectProductProps {
-    selected: string;
-    products: IProduct[];
+    products: IProduct[],
+    index: number
 }
 
-const SelectProduct: React.FC<SelectProductProps> = ({ selected, products }) => {
+const SelectProduct: React.FC<SelectProductProps> = ({ products, index }) => {
+    const {register} = useFormContext();
+
     return (
-        <Form.Select value={selected}>
-            <option value={"INVALID"}>
-                Select Product
-            </option>
+        <Form.Select {...register(`rows.${index}.product`, {required: true})}>
             {
                 products.map((product) =>
                     <option value={product.id}>

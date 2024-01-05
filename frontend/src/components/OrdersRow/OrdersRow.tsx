@@ -1,25 +1,18 @@
 import React from 'react';
 import {IOrder} from "../../types/IOrder";
-import RowDelete from "../RowDelete/RowDelete";
-import OrderRows from "../OrderRows/OrderRows";
+import OrderRow from "../OrderRow/OrderRow";
 
 interface OrdersRowProps {
     order: IOrder;
 }
 
 const OrdersRow: React.FC<OrdersRowProps> = ({ order }) => {
-    console.log(order);
-
     return (
-        <tr>
-            <td className={"fw-bold"} style={{ cursor: "pointer" }}>{order.id}</td>
-            <td style={{ cursor: "pointer" }}>{order.customer}</td>
-            <td style={{ cursor: "pointer" }}>{order.order_date.toLocaleDateString('ru')}</td>
-            <td>
-                <OrderRows products={order.rows} />
-            </td>
-            <td><RowDelete /></td>
-        </tr>
+        <>
+            {order.rows.map((row, index) =>
+                <OrderRow order={order} index={index} key={row.id}/>
+            )}
+        </>
     );
 }
 

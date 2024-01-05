@@ -5,16 +5,17 @@ import getClasses from "../../utils/getClasses";
 import DashboardTitle from "../DashboardTitle/DashboardTitle";
 
 interface DashboardHeaderProps {
-    currentDate: Date;
-    className?: string;
+    currentDate: Date,
+    className?: string,
+    addCallback: () => void
 }
 
-const DashboardHeader: React.FC<DashboardHeaderProps> = ({ currentDate, className }) => {
+const DashboardHeader: React.FC<DashboardHeaderProps> = ({ currentDate, className, addCallback }) => {
     const classes = getClasses(className);
 
     return (
         <Stack direction="horizontal" className={`d-flex justify-content-between align-items-center ${classes}`}>
-            <DashboardTitle />
+            <DashboardTitle addCallback={addCallback}/>
             <DashboardDate currentDate={currentDate} />
         </Stack>
     );

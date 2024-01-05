@@ -94,7 +94,7 @@ class Connection {
         const query: string = `
             INSERT INTO order_row
             (id, product, "number", "order")
-            VALUES(gen_random_uuid(), ${row.product.id}, ${row.number}, '${order_id}');
+            VALUES(gen_random_uuid(), ${row.product}, ${row.number}, '${order_id}');
         `
 
         return (await this._connection.query(query))
