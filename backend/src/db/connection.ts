@@ -57,6 +57,15 @@ class Connection {
         return (await this._connection.query(query));
     }
 
+    async getProducts(): Promise<IProduct[]> {
+        const query: string = `
+            SELECT *
+            FROM products
+        `
+
+        return (await this._connection.query(query));
+    }
+
     async getFullOrder(): Promise<IOrderRowProduct[]> {
         const query: string = `
             SELECT 

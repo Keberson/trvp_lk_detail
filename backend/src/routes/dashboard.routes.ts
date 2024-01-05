@@ -6,6 +6,7 @@ import IOrderRowProduct from "../types/IOrderRowProduct.js";
 import IOrderRowFull from "../types/IOrderRowFull.js";
 import IOrderRaw from "../types/IOrderRaw.js";
 import IOrderInfo from "../types/IOrderInfo.js";
+import IProduct from "../types/IProdcut.js";
 
 const router: Router = Router();
 
@@ -41,6 +42,12 @@ router.get('/getOrders', async (req: Request, res: Response): Promise<Response> 
     }
 
     return res.status(200).json({result});
+});
+
+router.get('/getProducts', async (req: Request, res: Response): Promise<Response> => {
+    const result: IProduct[] = await db.getProducts();
+
+    return res.status(200).json({result})
 });
 
 router.post('/createOrder', async (req: Request, res: Response): Promise<Response> => {
