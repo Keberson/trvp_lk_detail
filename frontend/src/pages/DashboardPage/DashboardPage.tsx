@@ -17,7 +17,6 @@ import {toggleModal} from "../../store/slices/utilsSlice";
 
 const DashboardPage = () => {
     const dispatch = useAppDispatch();
-    const currentDate: Date = new Date();
     const {isLoading: isLoadingOrders, error: errorOrders} = useGetOrdersQuery();
     const {isLoading: isLoadingProducts, error: errorProducts} = useGetProductsQuery();
     const orders: IOrder[] = useAppSelector(state => state.dashboard.orders);
@@ -30,7 +29,7 @@ const DashboardPage = () => {
     return (
         <>
             <Container className={"mh-100 d-flex flex-column"}>
-                <DashboardHeader currentDate={currentDate} />
+                <DashboardHeader />
                 <DashboardBody className={"mt-5"} orders={orders} />
             </Container>
 

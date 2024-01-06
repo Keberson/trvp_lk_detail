@@ -49,6 +49,20 @@ export const dashboardApi = createApi({
             }),
             invalidatesTags: () => ['Post']
         }),
+        expiredOrders: build.mutation<IResponse, string>( {
+            query: (data) => ({
+                url: `/expiredOrders/${data}`,
+                method: 'POST',
+            }),
+            invalidatesTags: () => ['Post']
+        }),
+        simulate: build.mutation<IResponse, void>( {
+            query: () => ({
+                url: `/simulate`,
+                method: 'POST',
+            }),
+            invalidatesTags: () => ['Post']
+        }),
     })
 });
 
@@ -57,5 +71,7 @@ export const {
     useGetProductsQuery,
     useCreateOrderMutation,
     useEditOrderMutation,
-    useDeleteOrderMutation
+    useDeleteOrderMutation,
+    useExpiredOrdersMutation,
+    useSimulateMutation
 } = dashboardApi;

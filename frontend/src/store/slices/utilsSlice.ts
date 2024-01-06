@@ -8,6 +8,7 @@ export interface utilsState {
     isErrorShow: boolean,
     errorText: string,
     utilOrder: IOrder,
+    currentDate: Date,
 }
 
 const initialState: utilsState = {
@@ -16,7 +17,8 @@ const initialState: utilsState = {
     isLoadingShow: false,
     isErrorShow: false,
     errorText: '',
-    utilOrder: emptyOrder
+    utilOrder: emptyOrder,
+    currentDate: new Date()
 }
 
 export const utilsSlice = createSlice({
@@ -42,6 +44,9 @@ export const utilsSlice = createSlice({
         },
         setUtilOrder: (state, payload) => {
             state.utilOrder = payload.payload
+        },
+        incrementDate: (state) => {
+            state.currentDate.setDate(state.currentDate.getDate() + 1);
         }
     },
 })
@@ -52,6 +57,7 @@ export const {
     toggleLoading,
     showError,
     clearError,
-    setUtilOrder
+    setUtilOrder,
+    incrementDate
 } = utilsSlice.actions;
 export default utilsSlice.reducer;

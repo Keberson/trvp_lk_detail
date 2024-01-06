@@ -17,7 +17,7 @@ const SelectProduct: React.FC<SelectProductProps> = ({ index }) => {
             {
                 products.map((product) =>
                     <option value={product.id}>
-                        {product.name}
+                        {product.name} / {product.number}
                     </option>
                 )
             }

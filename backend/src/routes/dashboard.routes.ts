@@ -118,10 +118,18 @@ router.delete('/deleteOrder/:id', async (req: Request, res: Response): Promise<R
     return res.status(200).json({message: "Successful deleted order"});
 });
 
-router.post('/expiredOrders', async (req: Request, res: Response): Promise<Response> => {
-    await db.deleteExpiredOrders();
+router.post('/expiredOrders/:date', async (req: Request, res: Response): Promise<Response> => {
+    const data: string = req.params['date'];
+
+    await db.deleteExpiredOrders(data);
 
     return res.status(200).json({message: "Successful deleted orders"});
 });
+
+router.post('/simulate', async (req: Request, res: Response): Promise<Response> => {
+    await db.addRandomProducts();
+
+    return res.status(200).json({message: "Successful simulated"});
+})
 
 export default router;

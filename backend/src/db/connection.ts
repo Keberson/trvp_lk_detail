@@ -5,11 +5,10 @@ import IOrderInfo from "../types/IOrderInfo.js";
 import IOrderRow from "../types/IOrderRow.js";
 import IProduct from "../types/IProdcut.js";
 import IOrderRowProduct from "../types/IOrderRowProduct.js";
-import IOrderRowRaw from "../types/IOrderRowRaw.js";
 import IOrderInfoRaw from "../types/IOrderInfoRaw.js";
-import IOrderRowFull from "../types/IOrderRowFull.js";
 import IOrderRowEdit from "../types/IOrderRowEdit.js";
 import IOrderRowDB from "../types/IOrderRowDB.js";
+import getRandomNumber from "../utils/random.js";
 
 class Connection {
     private readonly _settings: any;
@@ -139,13 +138,30 @@ class Connection {
         return (await this._connection.query(query))
     }
 
-    async deleteExpiredOrders(): Promise<void[]> {
+    async deleteExpiredOrders(date?: string): Promise<void[]> {
         const query: string = `
             DELETE FROM order_info
-            WHERE order_date<NOW();
+            WHERE order_date<'${date ? date : 'NOW()'}';
         `
 
         return (await this._connection.query(query))
+    }
+
+    async addRandomProducts(): Promise<void[]> {
+        const products = await this.getProducts();
+        const queries: string[] = [];
+
+        for (const product of products) {
+            queries.push(`
+                UPDATE products
+                SET number=(SELECT number FROM products WHERE id=${product.id}) + ${getRandomNumber(1, 100)}
+                WHERE id=${product.id};
+            `)
+        }
+
+        const query: string = queries.join('');
+
+        return (await this._connection.query(query));
     }
 }
 
