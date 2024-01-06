@@ -23,28 +23,34 @@ const LoginPage = () => {
     return (
         <>
             <Container className={"h-100 d-flex justify-content-center align-items-center"}>
-                <Card className={"p-3 w-50 align-items-center"}>
-                    <Card.Body>
+                <Card className={"p-4 w-50 h-75"}>
+                    <Card.Body className={"d-flex flex-column justify-content-between"}>
                         <Card.Title as={CustomTitle}>Login</Card.Title>
-                        <Card.Text className={"mb-5 text-muted"}>
+                        <Card.Text className={"mb-4 text-muted"}>
                             Enter your login and password
                         </Card.Text>
-                        <Form onSubmit={handleSubmit(onSubmit)}>
+                        <Form className={"mb-2"} onSubmit={handleSubmit(onSubmit)}>
                             <Form.Group className="mb-3">
-                                <Form.Label>Login</Form.Label>
+                                <Form.Label className={"ms-2"}>Login</Form.Label>
                                 <Form.Control type="name" placeholder="login" {...register("login", {required: true, min: 5})} />
                             </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Password</Form.Label>
+                            <Form.Group className="mb-5">
+                                <Form.Label className={"ms-2"}>Password</Form.Label>
                                 <Form.Control type="password" {...register("password", {required: true, min: 6, max: 20})}/>
                             </Form.Group>
-                            <Button variant="dark" type="submit" className={"w-100"}>
+                            <Button
+                                variant="dark"
+                                type="submit"
+                                className={"w-100 button-dark-green-hover"}
+                                style={{ background: "#45624E", color: "#FFF", border: "none" }}
+                            >
                                 Login
                             </Button>
                         </Form>
                     </Card.Body>
                 </Card>
             </Container>
+
             {error && <ErrorAlert error={(error as TError).data.message}/>}
             {isLoading && <SpinnerCustom />}
         </>
