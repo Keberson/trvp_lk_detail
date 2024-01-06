@@ -2,7 +2,7 @@ import {IOrderRowCreate} from "./IOrderRowCreate";
 
 interface IFormCreate {
     customer: string,
-    order_date: Date,
+    order_date: string,
     rows: IOrderRowCreate[]
 }
 

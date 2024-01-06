@@ -1,7 +1,7 @@
-import IOrderInfoRaw from "./IOrderInfoRaw.js";
-
-interface IOrderInfo extends IOrderInfoRaw{
+interface IOrderInfo {
     id: string,
+    customer: string,
+    order_date: Date
 }
 
 export default IOrderInfo;

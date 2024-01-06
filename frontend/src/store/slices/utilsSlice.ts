@@ -1,17 +1,22 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {emptyOrder, IOrder} from "../../types/IOrder";
 
 export interface utilsState {
     isModalShow: boolean,
+    modalTitle: 'Create Order' | 'Edit Order' | '',
     isLoadingShow: boolean,
     isErrorShow: boolean,
-    errorText: string
+    errorText: string,
+    utilOrder: IOrder,
 }
 
 const initialState: utilsState = {
     isModalShow: false,
+    modalTitle: '',
     isLoadingShow: false,
     isErrorShow: false,
-    errorText: ''
+    errorText: '',
+    utilOrder: emptyOrder
 }
 
 export const utilsSlice = createSlice({
@@ -21,26 +26,32 @@ export const utilsSlice = createSlice({
         toggleModal: (state) => {
             state.isModalShow = !state.isModalShow;
         },
+        setModalTitle: (state, payload) => {
+            state.modalTitle = payload.payload;
+        },
         toggleLoading: (state) => {
-            console.log(state.isLoadingShow)
             state.isLoadingShow = !state.isLoadingShow;
         },
         showError: (state, payload) => {
             state.isErrorShow = true;
-            console.log(payload);
             state.errorText = payload.payload;
         },
         clearError: (state) => {
             state.isErrorShow = false;
             state.errorText = '';
+        },
+        setUtilOrder: (state, payload) => {
+            state.utilOrder = payload.payload
         }
     },
 })
 
 export const {
     toggleModal,
+    setModalTitle,
     toggleLoading,
     showError,
-    clearError
+    clearError,
+    setUtilOrder
 } = utilsSlice.actions;
 export default utilsSlice.reducer;

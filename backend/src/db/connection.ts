@@ -8,6 +8,8 @@ import IOrderRowProduct from "../types/IOrderRowProduct.js";
 import IOrderRowRaw from "../types/IOrderRowRaw.js";
 import IOrderInfoRaw from "../types/IOrderInfoRaw.js";
 import IOrderRowFull from "../types/IOrderRowFull.js";
+import IOrderRowEdit from "../types/IOrderRowEdit.js";
+import IOrderRowDB from "../types/IOrderRowDB.js";
 
 class Connection {
     private readonly _settings: any;
@@ -23,35 +25,6 @@ class Connection {
             SELECT * 
             FROM users
             WHERE login = '${login}'
-        `
-
-        return (await this._connection.query(query));
-    }
-
-    async getAllOrdersInfo(): Promise<IOrderInfo[]> {
-        const query: string = `
-            SELECT * 
-            FROM order_info
-        `
-
-        return (await this._connection.query(query));
-    }
-
-    async getOrderRows(order_id: string): Promise<IOrderRow[]> {
-        const query: string = `
-            SELECT id, product, "number"
-            FROM order_row
-            WHERE "order" = '${order_id}'
-        `
-
-        return (await this._connection.query(query));
-    }
-
-    async getProduct(product_id: number): Promise<IProduct[]> {
-        const query: string = `
-            SELECT *
-            FROM products
-            WHERE id = ${product_id}
         `
 
         return (await this._connection.query(query));
@@ -79,6 +52,44 @@ class Connection {
         return (await this._connection.query(query));
     }
 
+    async insertRow(row: IOrderRow, order_id: string): Promise<void[]> {
+        const query: string = `
+            INSERT INTO order_row
+            (id, product, "number", "order")
+            VALUES(gen_random_uuid(), ${row.product}, ${row.number}, '${order_id}');
+        `
+
+        return (await this._connection.query(query))
+    }
+
+    async getRows(order: string): Promise<IOrderRowDB[]> {
+        const query: string = `
+            SELECT * FROM order_row
+            WHERE "order"='${order}'
+        `;
+
+        return (await this._connection.query(query));
+    }
+
+    async editRow(row: IOrderRowEdit): Promise<void[]> {
+        const query: string = `
+            UPDATE order_row
+            SET product=${row.product}, "number"=${row.number}
+            WHERE id='${row.id}';
+        `
+
+        return (await this._connection.query(query))
+    }
+
+    async deleteRow(row_id: string): Promise<void[]> {
+        const query: string = `
+            DELETE FROM order_row
+            WHERE id='${row_id}'
+        `;
+
+        return (await this._connection.query(query));
+    }
+
     async insertOrder(order: IOrderInfoRaw): Promise<string> {
         const query: string = `
             INSERT INTO order_info
@@ -90,21 +101,20 @@ class Connection {
         return (await this._connection.query(query))[0].id
     }
 
-    async insertRow(row: IOrderRowRaw, order_id: string): Promise<void[]> {
+    async getOrder(order_id: string): Promise<IOrderInfo[]> {
         const query: string = `
-            INSERT INTO order_row
-            (id, product, "number", "order")
-            VALUES(gen_random_uuid(), ${row.product}, ${row.number}, '${order_id}');
+            SELECT * FROM order_info
+            WHERE id='${order_id}';
         `
 
         return (await this._connection.query(query))
     }
 
-    async editRow(row: IOrderRowFull): Promise<void[]> {
+    async editOrderInfo(orderInfo: IOrderInfo): Promise<void[]> {
         const query: string = `
-            UPDATE order_row
-            SET "number"=${row.number}
-            WHERE id='${row.id}';
+            UPDATE order_info
+            SET customer='${orderInfo.customer}', order_date='${orderInfo.order_date}'
+            WHERE id='${orderInfo.id}';
         `
 
         return (await this._connection.query(query))
@@ -113,15 +123,6 @@ class Connection {
     async deleteOrder(order_id: string): Promise<void[]> {
         const query: string = `
             DELETE FROM order_info
-            WHERE id='${order_id}';
-        `
-
-        return (await this._connection.query(query))
-    }
-
-    async getOrder(order_id: string): Promise<IOrderInfo[]> {
-        const query: string = `
-            SELECT * FROM order_info
             WHERE id='${order_id}';
         `
 

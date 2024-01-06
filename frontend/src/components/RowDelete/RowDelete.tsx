@@ -21,7 +21,7 @@ const RowDelete: React.FC<RowDeleteProps> = ({ productsLength, orderID }) => {
     };
 
     return (
-        <td rowSpan={productsLength}>
+        <td rowSpan={productsLength} onClick={(e) => e.stopPropagation()} style={{ cursor: "default" }}>
             <Button className={"p-0 bg-white border-0 btn-outline"} onClick={onClick}>
                 <DeleteRow />
             </Button>

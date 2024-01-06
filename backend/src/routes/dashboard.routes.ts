@@ -7,6 +7,7 @@ import IOrderRowFull from "../types/IOrderRowFull.js";
 import IOrderRaw from "../types/IOrderRaw.js";
 import IOrderInfo from "../types/IOrderInfo.js";
 import IProduct from "../types/IProdcut.js";
+import IOrderEdit from "../types/IOrderEdit.js";
 
 const router: Router = Router();
 
@@ -58,17 +59,40 @@ router.post('/createOrder', async (req: Request, res: Response): Promise<Respons
     }));
 
     for (const row of data.rows) {
-        await db.insertRow(row, order_id);
+        await db.insertRow({
+            ...row,
+            order: order_id
+        }, order_id);
     }
 
     return res.status(200).json({message: 'Successful created order'});
 });
 
 router.patch('/editOrder', async (req: Request, res: Response): Promise<Response> => {
-    const data: IOrderFull = req.body;
+    const data: IOrderEdit = req.body;
+    const rows = await db.getRows(data.id);
+
+    await db.editOrderInfo({
+        id: data.id,
+        customer: data.customer,
+        order_date: data.order_date
+    });
 
     for (const row of data.rows) {
-        await db.editRow(row);
+        if ('id' in row) {
+            await db.editRow(row);
+        } else {
+            await db.insertRow({
+                ...row,
+                order: data.id
+            } ,data.id);
+        }
+    }
+
+    for (const row of rows) {
+        if (data.rows.find((r) => r.id === row.id) === undefined) {
+            await db.deleteRow(row.id);
+        }
     }
 
     return res.status(200).json({message: "Successful edited order"});

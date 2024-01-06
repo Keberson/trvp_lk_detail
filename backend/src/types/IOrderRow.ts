@@ -1,6 +1,5 @@
 interface IOrderRow {
-    id: string,
-    product: number,
+    product: string,
     number: number,
     order: string
 }

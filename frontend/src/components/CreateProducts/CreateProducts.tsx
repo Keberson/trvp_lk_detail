@@ -1,19 +1,16 @@
 import React from 'react';
 import {Form, Stack} from "react-bootstrap";
 import CreateProductSelect from "../CreateProductSelect/CreateProductSelect";
-import {IProduct} from "../../types/IProduct";
 import {FieldArrayWithId} from "react-hook-form";
 
 interface CreateProductsProps {
     productsForms: FieldArrayWithId[],
-    products: IProduct[],
     append: () => void,
     remove: (idx: number) => void
 }
 
 const CreateProducts: React.FC<CreateProductsProps> = ({
                                                            productsForms,
-                                                           products,
                                                            append,
                                                            remove
 }) => {
@@ -23,7 +20,7 @@ const CreateProducts: React.FC<CreateProductsProps> = ({
             <Stack className={"mb-2 p-3 border rounded-2 overflow-auto"} style={{ height: "200px" }}>
                 {
                     productsForms.map((productForm, idx) =>
-                        <CreateProductSelect products={products} idx={idx} fieldId={productForm.id} remove={() => remove(idx)} />
+                        <CreateProductSelect idx={idx} fieldId={productForm.id} remove={() => remove(idx)} />
                     )
                 }
             </Stack>

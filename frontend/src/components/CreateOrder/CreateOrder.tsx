@@ -1,19 +1,14 @@
 import React from 'react';
 import {Button, Form} from "react-bootstrap";
 import CreateProducts from "../CreateProducts/CreateProducts";
-import {IProduct} from "../../types/IProduct";
 import {FormProvider, SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {emptyRow} from "../../types/IOrderRowCreate";
 import IFormCreate from "../../types/IFormCreate";
 import {useCreateOrderMutation} from "../../services/DashboardService";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {toggleLoading} from "../../store/slices/utilsSlice";
+import {toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
 
-interface CreateOrderProps {
-    products: IProduct[];
-}
-
-const CreateOrder: React.FC<CreateOrderProps> = ({ products }) => {
+const CreateOrder = () => {
     const dispatch = useAppDispatch();
     const methods = useForm<IFormCreate>();
     const {fields, append, remove} = useFieldArray({
@@ -28,7 +23,8 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ products }) => {
     const onSubmit: SubmitHandler<IFormCreate> = async (formData) => {
         dispatch(toggleLoading());
         await createOrder({...formData});
-        dispatch(toggleLoading())
+        dispatch(toggleLoading());
+        dispatch(toggleModal());
     };
 
     return (
@@ -44,7 +40,6 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ products }) => {
                 </Form.Group>
                 <CreateProducts
                     productsForms={fields}
-                    products={products}
                     append={() => append(emptyRow)}
                     remove={remove}
                 />

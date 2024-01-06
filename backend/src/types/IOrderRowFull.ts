@@ -1,7 +1,9 @@
-import IOrderRowRaw from "./IOrderRowRaw.js";
+import IProductOrder from "./IProductOrder.js";
 
-interface IOrderRowFull extends IOrderRowRaw {
+interface IOrderRowFull {
     id: string,
+    product: IProductOrder,
+    number: number
 }
 
 export default IOrderRowFull;

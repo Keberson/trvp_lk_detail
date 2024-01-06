@@ -3,6 +3,7 @@ import IFormCreate from "../types/IFormCreate";
 import IOrdersResponse from "../types/IOrdersResponse";
 import IProductResponse from "../types/IProductResponse";
 import IResponse from "../types/IResponse";
+import {IOrderEdit} from "../types/IOrderEdit";
 
 // @ts-ignore
 export const dashboardApi = createApi({
@@ -33,6 +34,14 @@ export const dashboardApi = createApi({
             }),
             invalidatesTags: () => ['Post']
         }),
+        editOrder: build.mutation<IResponse, IOrderEdit>({
+            query: (body) => ({
+                url: '/editOrder',
+                method: 'PATCH',
+                body: body
+            }),
+            invalidatesTags: () => ['Post']
+        }),
         deleteOrder: build.mutation<IResponse, string>( {
             query: (id) => ({
                 url: `/deleteOrder/${id}`,
@@ -47,5 +56,6 @@ export const {
     useGetOrdersQuery,
     useGetProductsQuery,
     useCreateOrderMutation,
+    useEditOrderMutation,
     useDeleteOrderMutation
 } = dashboardApi;

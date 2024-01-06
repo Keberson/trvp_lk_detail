@@ -1,8 +1,9 @@
 import IOrderRowRaw from "./IOrderRowRaw.js";
-import IOrderInfoRaw from "./IOrderInfoRaw.js";
 
-interface IOrderRaw extends IOrderInfoRaw {
+interface IOrderRaw {
     rows: IOrderRowRaw[]
+    customer: string,
+    order_date: Date
 }
 
 export default IOrderRaw;

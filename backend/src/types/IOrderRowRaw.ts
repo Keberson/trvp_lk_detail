@@ -1,7 +1,5 @@
-import IProductOrder from "./IProductOrder.js";
-
 interface IOrderRowRaw {
-    product: IProductOrder,
+    product: string,
     number: number
 }
 

@@ -1,12 +1,17 @@
 import React from 'react';
 import CustomTitle from "../CustomTitle/CustomTitle";
 import {Button} from "react-bootstrap";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {setModalTitle, toggleModal} from "../../store/slices/utilsSlice";
 
-interface DashboardTitleProps {
-    addCallback: () => void
-}
+const DashboardTitle = () => {
+    const dispatch = useAppDispatch();
 
-const DashboardTitle: React.FC<DashboardTitleProps>  = ({ addCallback }) => {
+    const addCallback = () => {
+        dispatch(setModalTitle('Create Order'));
+        dispatch(toggleModal());
+    };
+
     return (
         <div className={"d-flex gap-3 align-items-center"}>
             <CustomTitle>Orders</CustomTitle>

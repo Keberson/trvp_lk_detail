@@ -20,10 +20,7 @@ export const dashboardSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(dashboardApi.endpoints.getOrders.matchFulfilled, (state, action) => {
-                state.orders = action.payload.result.map((order) => ({
-                    ...order,
-                    order_date: new Date(order.order_date)
-                }));
+                state.orders = action.payload.result;
             })
             .addMatcher(dashboardApi.endpoints.getOrders.matchRejected, (state, action) => {
                 state.orders = [];
