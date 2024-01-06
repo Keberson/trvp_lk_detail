@@ -1,8 +1,7 @@
-interface IOrderRowDB {
+import IOrderRow from "./IOrderRow.js";
+
+interface IOrderRowDB extends IOrderRow {
     id: string,
-    number: number,
-    product: string,
-    order: string
 }
 
 export default IOrderRowDB;
