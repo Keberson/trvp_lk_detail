@@ -13,7 +13,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({className }) => {
 
     return (
         <Stack direction="horizontal" className={`d-flex justify-content-between align-items-center ${classes}`}>
-            <DashboardTitle/>
+            <DashboardTitle />
             <DashboardDate />
         </Stack>
     );

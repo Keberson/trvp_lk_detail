@@ -28,7 +28,7 @@ const CreateOrder = () => {
         const needed: string[] = [];
 
         for (const row of formData.rows) {
-            const founded = products.find(product => String(product.id) === row.product);
+            const founded = products.find(product => String(product.id) === String(row.product));
 
             if (row.number > (founded ? founded.number : 0)) {
                 isEnough = false;
@@ -60,7 +60,8 @@ const CreateOrder = () => {
                         {...methods.register("order_date",
                             {
                                 required: true,
-                                validate: v => (new Date(v)) > (new Date())
+                                validate: v =>
+                                    (new Date(v)).setHours(0, 0, 0, 0) >= (new Date()).setHours(0, 0, 0, 0)
                             })}
                     />
                 </Form.Group>
