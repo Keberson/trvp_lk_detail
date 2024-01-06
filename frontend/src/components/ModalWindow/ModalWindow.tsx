@@ -30,8 +30,8 @@ const ModalWindow: React.FC<ModalWindowProps> = (
             dialogClassName={"h-50"}
             contentClassName={size}
         >
-            <Modal.Header closeButton onHide={hide}>
-                <Modal.Title>
+            <Modal.Header closeButton onHide={hide} style={{ background: "#C0CFB2" }}>
+                <Modal.Title className={"fw-bolder"}>
                     {title}
                 </Modal.Title>
             </Modal.Header>

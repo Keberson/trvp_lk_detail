@@ -60,10 +60,10 @@ const EditOrder = () => {
         <FormProvider {...methods}>
             <Form className={"p-2 d-flex flex-column h-100"} onSubmit={methods.handleSubmit(onSubmit)}>
                 <Form.Group className="mb-3" controlId="orderCreateCustomer">
-                    <Form.Label>Customer</Form.Label>
+                    <Form.Label className={"ms-3 fw-bold"}>Customer</Form.Label>
                     <Form.Control type="text" placeholder="Enter customer" {...methods.register("customer", {required: true})} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="orderCreateDate">
+                <Form.Group className="mb-3 fw-bold" controlId="orderCreateDate">
                     <Form.Label>Order Date</Form.Label>
                     <Form.Control
                         type="date"
@@ -80,7 +80,7 @@ const EditOrder = () => {
                     append={() => append(emptyRow)}
                     remove={remove}
                 />
-                <Button variant="dark" type="submit">
+                <Button style={{ background: "#45624E", color: "#FFF", border: "none" }} className={"button-dark-green-hover"} type="submit">
                     Edit Order
                 </Button>
             </Form>

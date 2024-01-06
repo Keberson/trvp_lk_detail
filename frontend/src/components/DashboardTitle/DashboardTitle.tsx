@@ -17,8 +17,9 @@ const DashboardTitle = () => {
             <CustomTitle>Orders</CustomTitle>
             <Button
                 style={{ background: "#45624E", color: "#FFF" }}
-                className={"ps-3 pe-3 border-0"}
+                className={"ps-3 pe-3 border-0 button-dark-green-hover"}
                 onClick={addCallback}
+                variant={"success"}
             >
                 <p>Add Item</p>
             </Button>

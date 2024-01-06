@@ -25,7 +25,7 @@ const DashboardDate = () => {
     return (
         <div className={"d-flex align-items-center"}>
             <DateViewer currentDate={currentDate} />
-            <Button className={"d-flex ms-3 align-items-center border"}
+            <Button className={"d-flex ms-3 align-items-center border button-dark-green-hover"}
                     style={{ background: "#45624E", border: "none", color: "#FFF" }}
                     onClick={onClick}
             >

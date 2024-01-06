@@ -16,7 +16,7 @@ const CreateProducts: React.FC<CreateProductsProps> = ({
 }) => {
     return (
         <Stack className={"mh-100 mb-3"}>
-            <p className={"mb-2"}>Products</p>
+            <p className={"mb-2 ms-2 fw-bold"}>Products</p>
             <Stack className={"mb-2 p-3 border rounded-2 overflow-auto"} style={{ height: "200px" }}>
                 {
                     productsForms.map((productForm, idx) =>
@@ -25,7 +25,13 @@ const CreateProducts: React.FC<CreateProductsProps> = ({
                 }
             </Stack>
             <Form.Group controlId="orderCreateProducts">
-                <Form.Control type="button" value="Add new Product" onClick={append} />
+                <Form.Control
+                    type="button"
+                    value="Add new Product"
+                    onClick={append}
+                    style={{ border: "1px solid #273526", color: "273526" }}
+                    className={"button-light-hover"}
+                />
             </Form.Group>
         </Stack>
     );
