@@ -36,7 +36,14 @@ const CreateOrder = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="orderCreateDate">
                     <Form.Label>Order Date</Form.Label>
-                    <Form.Control type="date" {...methods.register("order_date", {required: true})}/>
+                    <Form.Control
+                        type="date"
+                        {...methods.register("order_date",
+                            {
+                                required: true,
+                                validate: v => (new Date(v)) > (new Date())
+                            })}
+                    />
                 </Form.Group>
                 <CreateProducts
                     productsForms={fields}
