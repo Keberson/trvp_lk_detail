@@ -39,6 +39,16 @@ class Connection {
         return (await this._connection.query(query));
     }
 
+    async addProduct(product: number, value: number): Promise<void[]> {
+        const query: string = `
+            UPDATE products
+            SET number=(SELECT number FROM products WHERE id=${product}) + ${value}
+            WHERE id=${product};
+        `
+
+        return (await this._connection.query(query));
+    }
+
     async getFullOrder(): Promise<IOrderRowProduct[]> {
         const query: string = `
             SELECT 
@@ -124,6 +134,15 @@ class Connection {
         const query: string = `
             DELETE FROM order_info
             WHERE id='${order_id}';
+        `
+
+        return (await this._connection.query(query))
+    }
+
+    async deleteExpiredOrders(): Promise<void[]> {
+        const query: string = `
+            DELETE FROM order_info
+            WHERE order_date<NOW();
         `
 
         return (await this._connection.query(query))

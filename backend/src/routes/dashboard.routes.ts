@@ -91,6 +91,7 @@ router.patch('/editOrder', async (req: Request, res: Response): Promise<Response
 
     for (const row of rows) {
         if (data.rows.find((r) => r.id === row.id) === undefined) {
+            await db.addProduct(Number(row.product), row.number);
             await db.deleteRow(row.id);
         }
     }
@@ -115,6 +116,12 @@ router.delete('/deleteOrder/:id', async (req: Request, res: Response): Promise<R
     }
 
     return res.status(200).json({message: "Successful deleted order"});
+});
+
+router.post('/expiredOrders', async (req: Request, res: Response): Promise<Response> => {
+    await db.deleteExpiredOrders();
+
+    return res.status(200).json({message: "Successful deleted orders"});
 });
 
 export default router;
