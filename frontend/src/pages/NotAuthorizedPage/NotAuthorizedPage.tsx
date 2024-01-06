@@ -12,7 +12,13 @@ const NotAuthorizedPage = () => {
                 <CustomTitle className={"h1"}>Access denied</CustomTitle>
                 <p className={"text-muted"}>Sorry, you do not have the necessary permissions to view this page.</p>
                 <NavLink to="/login" className={"object-fit-contain"}>
-                    <Button className={"ps-5 pe-5 pt-2 pb-2"} variant={"dark"}>Login</Button>
+                    <Button
+                        className={"ps-5 pe-5 pt-2 pb-2 button-dark-green-hover"}
+                        variant={"dark"}
+                        style={{ background: "#45624E", color: "#FFF", border: "none" }}
+                    >
+                        Login
+                    </Button>
                 </NavLink>
             </Stack>
         </Container>
