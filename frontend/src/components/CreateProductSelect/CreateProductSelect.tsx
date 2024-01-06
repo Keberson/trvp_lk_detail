@@ -19,7 +19,7 @@ const CreateProductSelect: React.FC<CreateProductSelectProps> = ({ idx, remove, 
                 <SelectProduct index={idx} />
             </Form.Group>
             <Form.Group style={{ width: "25%" }}>
-                <Form.Control type="number" placeholder="0" min={1}  {...register(`rows.${idx}.number`, {required: true})} />
+                <Form.Control type="number" placeholder="0" min={1} {...register(`rows.${idx}.number`, {required: true})} />
             </Form.Group>
             <Button onClick={remove} className={"bg-white border-0"}>
                 <Cross />

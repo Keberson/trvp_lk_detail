@@ -6,10 +6,11 @@ import {emptyRow} from "../../types/IOrderRowCreate";
 import IFormCreate from "../../types/IFormCreate";
 import {useCreateOrderMutation} from "../../services/DashboardService";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
+import {showError, toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 const CreateOrder = () => {
-    const dispatch = useAppDispatch();
+    const products = useAppSelector(state => state.dashboard.products);
     const methods = useForm<IFormCreate>();
     const {fields, append, remove} = useFieldArray({
         control: methods.control,
@@ -19,12 +20,30 @@ const CreateOrder = () => {
         }
     });
     const [createOrder] = useCreateOrderMutation();
+    const dispatch = useAppDispatch();
+
 
     const onSubmit: SubmitHandler<IFormCreate> = async (formData) => {
-        dispatch(toggleLoading());
-        await createOrder({...formData});
-        dispatch(toggleLoading());
-        dispatch(toggleModal());
+        let isEnough = true;
+        const needed: string[] = [];
+
+        for (const row of formData.rows) {
+            const founded = products.find(product => String(product.id) === row.product);
+
+            if (row.number > (founded ? founded.number : 0)) {
+                isEnough = false;
+                needed.push(`${founded ? founded.name : 'Product'} - ${row.number - (founded ? founded.number : 0)}`);
+            }
+        }
+
+        if (isEnough) {
+            dispatch(toggleLoading());
+            await createOrder({...formData});
+            dispatch(toggleLoading());
+            dispatch(toggleModal());
+        } else {
+            dispatch(showError(`Need ${needed.join(' ')}`));
+        }
     };
 
     return (

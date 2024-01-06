@@ -23,6 +23,8 @@ const DashboardPage = () => {
     const orders: IOrder[] = useAppSelector(state => state.dashboard.orders);
     const isLoadingShow: boolean = useAppSelector(state => state.utils.isLoadingShow) || isLoadingOrders || isLoadingProducts;
     const isShowModal: boolean = useAppSelector(state => state.utils.isModalShow);
+    const isErrorShow: boolean = useAppSelector(state => state.utils.isErrorShow);
+    const errorText: string = useAppSelector(state => state.utils.errorText);
     const modalTitle: string = useAppSelector(state => state.utils.modalTitle);
 
     return (
@@ -43,6 +45,7 @@ const DashboardPage = () => {
             {isLoadingShow && <SpinnerCustom />}
             {errorOrders && <ErrorAlert error={(errorOrders as TError).data.message}/>}
             {errorProducts && <ErrorAlert error={(errorProducts as TError).data.message}/>}
+            {isErrorShow && <ErrorAlert error={errorText}/>}
         </>
     );
 }

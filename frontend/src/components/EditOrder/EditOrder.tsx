@@ -6,12 +6,13 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 import {FormProvider, SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {IOrderEdit} from "../../types/IOrderEdit";
 import {emptyRow} from "../../types/IOrderRowCreate";
-import {toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
+import {showError, toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useEditOrderMutation} from "../../services/DashboardService";
 
 const EditOrder = () => {
     const dispatch = useAppDispatch();
+    const products = useAppSelector(state => state.dashboard.products);
     const order = useAppSelector(state => state.utils.utilOrder);
     const [editOrder] = useEditOrderMutation();
     const methods = useForm<IOrderEdit>({
@@ -33,10 +34,26 @@ const EditOrder = () => {
     });
 
     const onSubmit: SubmitHandler<IOrderEdit> = async (formData) => {
-        dispatch(toggleLoading());
-        await editOrder({...formData});
-        dispatch(toggleLoading());
-        dispatch(toggleModal());
+        let isEnough = true;
+        const needed: string[] = [];
+
+        for (const row of formData.rows) {
+            const founded = products.find(product => String(product.id) === row.product);
+
+            if (row.number > (founded ? founded.number : 0)) {
+                isEnough = false;
+                needed.push(`${founded ? founded.name : 'Product'} - ${row.number - (founded ? founded.number : 0)}`);
+            }
+        }
+
+        if (isEnough) {
+            dispatch(toggleLoading());
+            await editOrder({...formData});
+            dispatch(toggleLoading());
+            dispatch(toggleModal());
+        } else {
+            dispatch(showError(`Need ${needed.join(' ')}`));
+        }
     };
 
     return (
