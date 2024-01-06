@@ -13,7 +13,7 @@ interface IFormInput {
 }
 
 const LoginPage = () => {
-    const [login, {isLoading, error}] = useLoginMutation();
+    const [login, {isLoading, isError, error}] = useLoginMutation();
     const {register, handleSubmit} = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
@@ -51,7 +51,7 @@ const LoginPage = () => {
                 </Card>
             </Container>
 
-            {error && <ErrorAlert error={(error as TError).data.message}/>}
+            {isError && <ErrorAlert error={(error as TError).data.message}/>}
             {isLoading && <SpinnerCustom />}
         </>
     );
