@@ -6,7 +6,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-    isAuth: localStorage.getItem("jwt") !== null
+    isAuth: localStorage.getItem("jwt") !== null,
 }
 
 export const authSlice = createSlice({
@@ -22,11 +22,13 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(userApi.endpoints.login.matchFulfilled, (state, action) => {
+                console.log(action.payload.jwt);
                 localStorage.setItem("jwt", action.payload.jwt);
+                console.log(localStorage.getItem("jwt"));
                 state.isAuth = true;
             })
             .addMatcher(userApi.endpoints.login.matchRejected, (state) => {
-                state.isAuth = localStorage.getItem("jwt") != null
+                state.isAuth = localStorage.getItem("jwt") !== null
             })
     }
 })

@@ -1,14 +1,14 @@
 import { IOrderRow } from "./IOrderRow";
 
 export interface IOrder {
-    id: string;
+    id: number;
     customer: string;
     order_date: string;
     rows: IOrderRow[];
 }
 
 export const emptyOrder = {
-    id: '',
+    id: 0,
     customer: '',
     order_date: '',
     rows: []

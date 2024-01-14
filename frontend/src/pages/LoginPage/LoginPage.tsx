@@ -23,19 +23,19 @@ const LoginPage = () => {
     return (
         <>
             <Container className={"h-100 d-flex justify-content-center align-items-center"}>
-                <Card className={"p-4 w-50 h-75"}>
-                    <Card.Body className={"d-flex flex-column justify-content-between"}>
+                <Card className={"p-4"} style={{ width: "40%" }}>
+                    <Card.Body className={"d-flex flex-column gap-2 "}>
                         <Card.Title as={CustomTitle}>Login</Card.Title>
-                        <Card.Text className={"mb-4 text-muted"}>
+                        <Card.Text className={"mb-3 mt-2 text-muted"}>
                             Enter your login and password
                         </Card.Text>
                         <Form className={"mb-2"} onSubmit={handleSubmit(onSubmit)}>
                             <Form.Group className="mb-3">
-                                <Form.Label className={"ms-2"}>Login</Form.Label>
+                                <Form.Label>Login</Form.Label>
                                 <Form.Control type="name" placeholder="login" {...register("login", {required: true, min: 5})} />
                             </Form.Group>
                             <Form.Group className="mb-5">
-                                <Form.Label className={"ms-2"}>Password</Form.Label>
+                                <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" {...register("password", {required: true, min: 6, max: 20})}/>
                             </Form.Group>
                             <Button

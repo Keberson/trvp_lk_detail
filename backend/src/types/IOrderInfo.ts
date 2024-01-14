@@ -1,7 +1,7 @@
 import IOrderInfoRaw from "./IOrderInfoRaw.js";
 
 interface IOrderInfo extends IOrderInfoRaw{
-    id: string,
+    id: number,
 }
 
 export default IOrderInfo;

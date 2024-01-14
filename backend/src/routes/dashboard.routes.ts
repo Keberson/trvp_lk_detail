@@ -53,6 +53,7 @@ router.get('/getProducts', async (req: Request, res: Response): Promise<Response
 
 router.post('/createOrder', async (req: Request, res: Response): Promise<Response> => {
     const data: IOrderRaw = req.body;
+
     const order_id = (await db.insertOrder({
         customer: data.customer,
         order_date: data.order_date
@@ -85,7 +86,7 @@ router.patch('/editOrder', async (req: Request, res: Response): Promise<Response
             await db.insertRow({
                 ...row,
                 order: data.id
-            } ,data.id);
+            }, data.id);
         }
     }
 

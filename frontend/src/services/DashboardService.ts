@@ -5,13 +5,14 @@ import IProductResponse from "../types/IProductResponse";
 import IResponse from "../types/IResponse";
 import {IOrderEdit} from "../types/IOrderEdit";
 
-// @ts-ignore
 export const dashboardApi = createApi({
     reducerPath: 'dashboardApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/dashboard',
         credentials: 'same-origin',
-        headers: new Headers({"Authorization": `Bearer ${localStorage.getItem("jwt")}`})
+        prepareHeaders(headers) {
+            return headers.set("Authorization", `Bearer ${localStorage.getItem("jwt")}`)
+        }
     }),
     tagTypes: ['Post'],
     endpoints: (build) => ({
@@ -24,7 +25,8 @@ export const dashboardApi = createApi({
         getProducts: build.query<IProductResponse, void>({
             query: () => ({
                 url: '/getProducts'
-            })
+            }),
+            providesTags: ['Post']
         }),
         createOrder: build.mutation<IResponse, IFormCreate>( {
             query: (body) => ({
@@ -42,7 +44,7 @@ export const dashboardApi = createApi({
             }),
             invalidatesTags: () => ['Post']
         }),
-        deleteOrder: build.mutation<IResponse, string>( {
+        deleteOrder: build.mutation<IResponse, number>( {
             query: (id) => ({
                 url: `/deleteOrder/${id}`,
                 method: 'DELETE',

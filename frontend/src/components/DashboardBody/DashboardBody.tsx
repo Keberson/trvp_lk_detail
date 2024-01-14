@@ -1,8 +1,7 @@
 import React from 'react';
-import {Card} from "react-bootstrap";
 import {IOrder} from "../../types/IOrder";
-import OrdersTable from "../OrdersTable/OrdersTable";
 import getClasses from "../../utils/getClasses";
+import OrderCard from "../OrderCard/OrderCard";
 
 interface DashboardBodyProps {
     orders: IOrder[];
@@ -13,9 +12,16 @@ const DashboardBody: React.FC<DashboardBodyProps> = ({ orders, className }) => {
     const classes = getClasses(className)
 
     return (
-        <Card className={`h-100 overflow-auto scrollbar-custom ${classes}`}>
-            <OrdersTable orders={orders} />
-        </Card>
+        <div
+            className={`h-100 overflow-auto scrollbar-custom ${classes} p-1 gap-4`}
+            style={{ display: "grid", gridTemplateColumns: "3fr 3fr 3fr" }}
+        >
+            {
+                orders.map((order) =>
+                    <OrderCard order={order}/>
+                )
+            }
+        </div>
     );
 }
 

@@ -1,5 +1,5 @@
 interface IOrderRowProduct {
-    order_info_id: string,
+    order_info_id: number,
     customer: string,
     order_date: Date,
     order_row_id: string,

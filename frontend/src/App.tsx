@@ -7,7 +7,7 @@ function App() {
 
     return (
         <BrowserRouter>
-            <Container className={"p-5 h-100"}>
+            <Container className={"pt-5 pb-5 p-2 h-100"}>
                 <AppRouter />
             </Container>
         </BrowserRouter>

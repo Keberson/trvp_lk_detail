@@ -7,7 +7,7 @@ const AuthWrap = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuth) {
+        if (!isAuth || localStorage.getItem("jwt") === null) {
             navigate("/denied");
         }
     }, [isAuth, navigate]);

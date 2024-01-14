@@ -10,7 +10,7 @@ export default class Psql {
             database: settings.database,
             password: settings.password,
             port: settings.port,
-            ssl: true
+            ssl: settings.ssl
         });
     }
 

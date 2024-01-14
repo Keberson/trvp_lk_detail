@@ -1,7 +1,7 @@
 import IOrderRowFull from "./IOrderRowFull.js";
 
 interface IOrderFull {
-    id: string,
+    id: number,
     customer: string,
     order_date: Date
     rows: IOrderRowFull[]

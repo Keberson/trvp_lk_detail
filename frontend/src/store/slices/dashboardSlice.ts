@@ -23,24 +23,31 @@ export const dashboardSlice = createSlice({
                 state.orders = action.payload.result;
             })
             .addMatcher(dashboardApi.endpoints.getOrders.matchRejected, (state, action) => {
-                state.orders = [];
                 if (action.payload && action.payload.status === 401) {
-                    // uu
+                    localStorage.removeItem("jwt");
                 }
             })
             .addMatcher(dashboardApi.endpoints.getProducts.matchFulfilled, (state, action) => {
                 state.products = action.payload.result;
             })
             .addMatcher(dashboardApi.endpoints.getProducts.matchRejected, (state, action) => {
-                state.products = [];
                 if (action.payload && action.payload.status === 401) {
-                    // useAppDispatch()(logout());
+                    localStorage.removeItem("jwt");
                 }
             })
             .addMatcher(dashboardApi.endpoints.createOrder.matchRejected, (state, action) => {
-                console.log(action.payload)
                 if (action.payload && action.payload.status === 401) {
-                    // useAppDS()(logout());
+                    localStorage.removeItem("jwt");
+                }
+            })
+            .addMatcher(dashboardApi.endpoints.editOrder.matchRejected, (state, action) => {
+                if (action.payload && action.payload.status === 401) {
+                    localStorage.removeItem("jwt");
+                }
+            })
+            .addMatcher(dashboardApi.endpoints.deleteOrder.matchRejected, (state, action) => {
+                if (action.payload && action.payload.status === 401) {
+                    localStorage.removeItem("jwt");
                 }
             })
     }

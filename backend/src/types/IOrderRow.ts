@@ -1,7 +1,7 @@
 interface IOrderRow {
     product: string,
     number: number,
-    order: string
+    order: number
 }
 
 export default IOrderRow;

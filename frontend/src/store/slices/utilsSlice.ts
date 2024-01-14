@@ -8,7 +8,7 @@ export interface utilsState {
     isErrorShow: boolean,
     errorText: string,
     utilOrder: IOrder,
-    currentDate: Date,
+    currentDate: string,
 }
 
 const initialState: utilsState = {
@@ -18,7 +18,7 @@ const initialState: utilsState = {
     isErrorShow: false,
     errorText: '',
     utilOrder: emptyOrder,
-    currentDate: new Date()
+    currentDate: (new Date()).toLocaleDateString('ru')
 }
 
 export const utilsSlice = createSlice({
@@ -46,7 +46,9 @@ export const utilsSlice = createSlice({
             state.utilOrder = payload.payload
         },
         incrementDate: (state) => {
-            state.currentDate.setDate(state.currentDate.getDate() + 1);
+            const tmpDate = new Date(state.currentDate);
+            tmpDate.setDate(tmpDate.getDate() + 1);
+            state.currentDate = tmpDate.toLocaleDateString('ru');
         }
     },
 })

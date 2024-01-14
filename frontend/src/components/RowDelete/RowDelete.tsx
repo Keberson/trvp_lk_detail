@@ -7,7 +7,7 @@ import {toggleLoading} from "../../store/slices/utilsSlice";
 
 interface RowDeleteProps {
     productsLength: number,
-    orderID: string
+    orderID: number
 }
 
 const RowDelete: React.FC<RowDeleteProps> = ({ productsLength, orderID }) => {

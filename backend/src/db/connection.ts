@@ -33,6 +33,7 @@ class Connection {
         const query: string = `
             SELECT *
             FROM products
+            ORDER BY "name"
         `
 
         return (await this._connection.query(query));
@@ -56,12 +57,13 @@ class Connection {
             FROM order_info
             JOIN order_row ON order_info.id = order_row."order"
             JOIN products ON products.id = order_row.product 
+            ORDER BY order_info_id
         `
 
         return (await this._connection.query(query));
     }
 
-    async insertRow(row: IOrderRow, order_id: string): Promise<void[]> {
+    async insertRow(row: IOrderRow, order_id: number): Promise<void[]> {
         const query: string = `
             INSERT INTO order_row
             (id, product, "number", "order")
@@ -71,7 +73,7 @@ class Connection {
         return (await this._connection.query(query))
     }
 
-    async getRows(order: string): Promise<IOrderRowDB[]> {
+    async getRows(order: number): Promise<IOrderRowDB[]> {
         const query: string = `
             SELECT * FROM order_row
             WHERE "order"='${order}'
@@ -99,11 +101,11 @@ class Connection {
         return (await this._connection.query(query));
     }
 
-    async insertOrder(order: IOrderInfoRaw): Promise<string> {
+    async insertOrder(order: IOrderInfoRaw): Promise<number> {
         const query: string = `
             INSERT INTO order_info
-            (id, customer, order_date)
-            VALUES(gen_random_uuid(), '${order.customer}', '${order.order_date}')
+            (customer, order_date)
+            VALUES('${order.customer}', '${order.order_date}')
             RETURNING id
         `
 
