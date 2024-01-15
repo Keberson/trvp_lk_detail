@@ -4,6 +4,7 @@ import {IOrder} from "../../types/IOrder";
 import {setModalTitle, setUtilOrder, toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useDeleteOrderMutation} from "../../services/DashboardService";
+import {Draggable, Droppable} from "react-beautiful-dnd";
 
 interface OrderCardProps {
     order: IOrder;
@@ -36,16 +37,32 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
             </Card.Header>
             <Card.Body>
                 <Card.Title>{order.customer}</Card.Title>
-                <Stack className={"mt-4 overflow-auto gap-2"} style={{ height: "200px" }}>
-                    {
-                        order.rows.map((row) =>
-                            <Stack direction={"horizontal"} className={"p-2 rounded-3 border"} draggable key={row.id}>
-                                <p>{row.product.name}</p>
-                                <p className={"ms-auto"}>{row.number}</p>
-                            </Stack>
-                        )
-                    }
-                </Stack>
+                <Droppable
+                    droppableId={order.id.toString()}
+                >
+                        {
+                            (provided) => (
+                                <div {...provided.droppableProps} ref={provided.innerRef} className={"mt-4 overflow-y-auto"} style={{ height: "200px" }}>
+                                    {
+                                        order.rows.map((row, index) =>
+                                            <Draggable draggableId={row.id} index={index} key={row.id}>
+                                                {(provided) => (
+                                                    <Stack direction={"horizontal"} className={"p-2 rounded-3 border"}
+                                                           {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}
+                                                    >
+                                                        <p>{row.product.name}</p>
+                                                        <p className={"ms-auto"}>{row.number}</p>
+                                                    </Stack>
+                                                )}
+                                            </Draggable>
+                                        )
+                                    }
+                                    {provided.placeholder}
+                                </div>
+                            )
+                        }
+
+                </Droppable>
                 <Stack direction={"horizontal"} className={"mt-3"}>
                     <Card.Link
                         className={"ms-auto"}

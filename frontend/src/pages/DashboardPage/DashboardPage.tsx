@@ -14,7 +14,6 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {toggleModal} from "../../store/slices/utilsSlice";
 
-
 const DashboardPage = () => {
     const dispatch = useAppDispatch();
     const {isLoading: isLoadingOrders, error: errorOrders} = useGetOrdersQuery();
