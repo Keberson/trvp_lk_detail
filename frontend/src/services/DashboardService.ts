@@ -9,7 +9,7 @@ import IRowsEdit from "../types/IRowsEdit";
 export const dashboardApi = createApi({
     reducerPath: 'dashboardApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/dashboard',
+        baseUrl: `${process.env.API_URL}/dashboard`,
         credentials: 'same-origin',
         prepareHeaders(headers) {
             return headers.set("Authorization", `Bearer ${localStorage.getItem("jwt")}`)
