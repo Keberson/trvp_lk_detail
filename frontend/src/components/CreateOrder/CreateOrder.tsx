@@ -50,9 +50,8 @@ const CreateOrder = () => {
 
     const validateDate = (v: string) => {
         const currentDate = moment(currentDateString, "DD.MM.YYYY").toDate();
-        console.log(currentDate)
 
-        return (new Date(v)).setHours(0, 0, 0, 0) >= currentDate.setHours(0, 0, 0, 0)
+        return (new Date(v)).setHours(0, 0, 0, 0) > currentDate.setHours(0, 0, 0, 0)
     };
 
     return (

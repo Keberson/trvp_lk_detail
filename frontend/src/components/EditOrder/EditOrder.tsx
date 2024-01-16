@@ -15,6 +15,7 @@ const EditOrder = () => {
     const products = useAppSelector(state => state.dashboard.products);
     const order = useAppSelector(state => state.utils.utilOrder);
     const [editOrder] = useEditOrderMutation();
+    const currentDateString = useAppSelector(state => state.utils.currentDate);
     const methods = useForm<IOrderEdit>({
         defaultValues: {
             ...order,
@@ -56,6 +57,12 @@ const EditOrder = () => {
         }
     };
 
+    const validateDate = (v: string) => {
+        const currentDate = moment(currentDateString, "DD.MM.YYYY").toDate();
+
+        return (new Date(v)).setHours(0, 0, 0, 0) > currentDate.setHours(0, 0, 0, 0)
+    };
+
     return (
         <FormProvider {...methods}>
             <Form className={"p-2 d-flex flex-column h-100"} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -70,8 +77,7 @@ const EditOrder = () => {
                         {...methods.register("order_date",
                             {
                                 required: true,
-                                validate: v =>
-                                    (new Date(v)).setHours(0, 0, 0, 0) >= (new Date()).setHours(0, 0, 0, 0)
+                                validate: validateDate
                             })}
                     />
                 </Form.Group>
