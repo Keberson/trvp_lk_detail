@@ -1,5 +1,4 @@
 import Psql from './psql.js';
-import jsonFile from 'jsonfile';
 import IUser from "../types/IUser.js";
 import IOrderInfo from "../types/IOrderInfo.js";
 import IOrderRow from "../types/IOrderRow.js";
@@ -11,12 +10,10 @@ import IOrderRowDB from "../types/IOrderRowDB.js";
 import getRandomNumber from "../utils/random.js";
 
 class Connection {
-    private readonly _settings: any;
     private _connection: Psql;
 
-    constructor(config: string) {
-        this._settings = jsonFile.readFileSync(config);
-        this._connection = new Psql(this._settings);
+    constructor() {
+        this._connection = new Psql();
     }
 
     async getUserInfo(login: string): Promise<IUser[]> {
@@ -177,4 +174,4 @@ class Connection {
     }
 }
 
-export default new Connection('config_db.json');
+export default new Connection();

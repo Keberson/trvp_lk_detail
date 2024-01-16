@@ -3,14 +3,9 @@ import pkg from 'pg';
 export default class Psql {
     private _pool: pkg.Pool;
 
-    constructor(settings) {
+    constructor() {
         this._pool = new pkg.Pool({
-            user: settings.user,
-            host: settings.host,
-            database: settings.database,
-            password: settings.password,
-            port: settings.port,
-            ssl: settings.ssl
+            connectionString: process.env.POSTGRES_URL + "?sslmode=require",
         });
     }
 
