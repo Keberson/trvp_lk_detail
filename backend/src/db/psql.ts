@@ -5,7 +5,7 @@ export default class Psql {
 
     constructor() {
         this._pool = new pkg.Pool({
-            connectionString: process.env.POSTGRES_URL + "?sslmode=require",
+            connectionString: process.env.POSTGRES_URL,
         });
     }
 

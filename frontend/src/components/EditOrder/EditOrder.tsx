@@ -40,10 +40,12 @@ const EditOrder = () => {
 
         for (const row of formData.rows) {
             const founded = products.find(product => String(product.id) === String(row.product));
+            const oldRow = order.rows.find(el => String(el.product.id) === String(row.product));
+            const oldValue = oldRow ? oldRow.number : 0;
 
-            if (row.number > (founded ? founded.number : 0)) {
+            if (row.number - oldValue > (founded ? founded.number : 0)) {
                 isEnough = false;
-                needed.push(`${founded ? founded.name : 'Product'} - ${row.number - (founded ? founded.number : 0)}`);
+                needed.push(`${founded ? founded.name : 'Product'} - ${row.number - oldValue - (founded ? founded.number : 0)}`);
             }
         }
 
