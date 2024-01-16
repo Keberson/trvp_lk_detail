@@ -8,6 +8,7 @@ import IOrderRaw from "../types/IOrderRaw.js";
 import IOrderInfo from "../types/IOrderInfo.js";
 import IProduct from "../types/IProdcut.js";
 import IOrderEdit from "../types/IOrderEdit.js";
+import IRowsEdit from "../types/IRowsEdit.js";
 
 const router: Router = Router();
 
@@ -98,6 +99,16 @@ router.patch('/editOrder', async (req: Request, res: Response): Promise<Response
     }
 
     return res.status(200).json({message: "Successful edited order"});
+});
+
+router.patch('/editRows', async (req: Request, res: Response): Promise<Response> => {
+    const data: IRowsEdit[] = req.body;
+
+    for (const row of data) {
+        await db.editRowOrderID(row.rowID, row.toOrder);
+    }
+
+    return res.status(200).json({message: "Successful edited rows"});
 });
 
 router.delete('/deleteOrder/:id', async (req: Request, res: Response): Promise<Response> => {

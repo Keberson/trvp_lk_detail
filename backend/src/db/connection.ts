@@ -92,6 +92,16 @@ class Connection {
         return (await this._connection.query(query))
     }
 
+    async editRowOrderID(row_id: string, order: number): Promise<void[]> {
+        const query: string = `
+            UPDATE order_row
+            SET "order" = ${order}
+            WHERE id='${row_id}';
+        `
+
+        return (await this._connection.query(query))
+    }
+
     async deleteRow(row_id: string): Promise<void[]> {
         const query: string = `
             DELETE FROM order_row

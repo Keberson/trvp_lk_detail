@@ -2,18 +2,13 @@ import {createSlice} from "@reduxjs/toolkit";
 import {dashboardApi} from "../../services/DashboardService";
 import {IOrder} from "../../types/IOrder";
 import {IProduct} from "../../types/IProduct";
-
-export interface IPrevOrderState {
-    rowID: string,
-    fromOrder: number,
-    toOrder: number,
-}
+import IRowsEdit from "../../types/IRowsEdit";
 
 export interface dashboardState {
     orders: IOrder[],
     products: IProduct[],
     error: string | undefined,
-    prevOrdersState: IPrevOrderState[],
+    rowsEdit: IRowsEdit[],
     isEditedOrders: boolean
 }
 
@@ -21,7 +16,7 @@ const initialState: dashboardState = {
     orders: [],
     products: [],
     error: undefined,
-    prevOrdersState: [],
+    rowsEdit: [],
     isEditedOrders: false
 }
 
@@ -50,29 +45,29 @@ export const dashboardSlice = createSlice({
                 const [removedRow] = fromOrderRows.splice(fromIndex, 1);
                 toOrderRows.splice(toIndex, 0, removedRow);
 
-                const row = state.prevOrdersState.find(val => val.rowID === removedRow.id);
+                const row = state.rowsEdit.find(val => val.rowID === removedRow.id);
 
                 if (!row) {
-                    state.prevOrdersState.push({
+                    state.rowsEdit.push({
                         rowID: removedRow.id,
                         fromOrder: fromOrder,
                         toOrder: toOrder,
                     });
                 } else {
-                    const index = state.prevOrdersState.indexOf(row);
+                    const index = state.rowsEdit.indexOf(row);
 
                     if (row.toOrder === fromOrder) {
-                        state.prevOrdersState.splice(index, 1);
+                        state.rowsEdit.splice(index, 1);
                     } else {
                         row.toOrder = toOrder;
                     }
                 }
 
-                state.isEditedOrders = state.prevOrdersState.length !== 0;
+                state.isEditedOrders = state.rowsEdit.length !== 0;
             }
         },
         resetOrders: (state) => {
-            for (const element of state.prevOrdersState) {
+            for (const element of state.rowsEdit) {
                 const orderTo = state.orders.find(el => el.id === element.toOrder);
                 const orderFrom = state.orders.find(el => el.id === element.fromOrder);
                 const orderRows = orderTo?.rows;
@@ -86,7 +81,7 @@ export const dashboardSlice = createSlice({
                 }
             }
 
-            state.prevOrdersState = [];
+            state.rowsEdit = [];
             state.isEditedOrders = false;
         },
     },
@@ -121,6 +116,21 @@ export const dashboardSlice = createSlice({
                 }
             })
             .addMatcher(dashboardApi.endpoints.deleteOrder.matchRejected, (state, action) => {
+                if (action.payload && action.payload.status === 401) {
+                    state.error = 'Unauthorized';
+                }
+            })
+            .addMatcher(dashboardApi.endpoints.simulate.matchRejected, (state, action) => {
+                if (action.payload && action.payload.status === 401) {
+                    state.error = 'Unauthorized';
+                }
+            })
+            .addMatcher(dashboardApi.endpoints.expiredOrders.matchRejected, (state, action) => {
+                if (action.payload && action.payload.status === 401) {
+                    state.error = 'Unauthorized';
+                }
+            })
+            .addMatcher(dashboardApi.endpoints.editRows.matchRejected, (state, action) => {
                 if (action.payload && action.payload.status === 401) {
                     state.error = 'Unauthorized';
                 }

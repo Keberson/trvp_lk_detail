@@ -4,6 +4,7 @@ import IOrdersResponse from "../types/IOrdersResponse";
 import IProductResponse from "../types/IProductResponse";
 import IResponse from "../types/IResponse";
 import {IOrderEdit} from "../types/IOrderEdit";
+import IRowsEdit from "../types/IRowsEdit";
 
 export const dashboardApi = createApi({
     reducerPath: 'dashboardApi',
@@ -44,6 +45,14 @@ export const dashboardApi = createApi({
             }),
             invalidatesTags: () => ['Post']
         }),
+        editRows: build.mutation<IResponse, IRowsEdit[]>({
+            query: (body) => ({
+                url: '/editRows',
+                method: 'PATCH',
+                body: body
+            }),
+            invalidatesTags: () => ['Post']
+        }),
         deleteOrder: build.mutation<IResponse, number>( {
             query: (id) => ({
                 url: `/deleteOrder/${id}`,
@@ -73,6 +82,7 @@ export const {
     useGetProductsQuery,
     useCreateOrderMutation,
     useEditOrderMutation,
+    useEditRowsMutation,
     useDeleteOrderMutation,
     useExpiredOrdersMutation,
     useSimulateMutation
