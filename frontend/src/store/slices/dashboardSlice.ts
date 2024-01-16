@@ -3,16 +3,26 @@ import {dashboardApi} from "../../services/DashboardService";
 import {IOrder} from "../../types/IOrder";
 import {IProduct} from "../../types/IProduct";
 
+export interface IPrevOrderState {
+    rowID: string,
+    fromOrder: number,
+    toOrder: number,
+}
+
 export interface dashboardState {
     orders: IOrder[],
     products: IProduct[],
-    error: string | undefined
+    error: string | undefined,
+    prevOrdersState: IPrevOrderState[],
+    isEditedOrders: boolean
 }
 
 const initialState: dashboardState = {
     orders: [],
     products: [],
-    error: undefined
+    error: undefined,
+    prevOrdersState: [],
+    isEditedOrders: false
 }
 
 export const dashboardSlice = createSlice({
@@ -39,8 +49,46 @@ export const dashboardSlice = createSlice({
                 const toOrderRows = toOrderSelected.rows;
                 const [removedRow] = fromOrderRows.splice(fromIndex, 1);
                 toOrderRows.splice(toIndex, 0, removedRow);
+
+                const row = state.prevOrdersState.find(val => val.rowID === removedRow.id);
+
+                if (!row) {
+                    state.prevOrdersState.push({
+                        rowID: removedRow.id,
+                        fromOrder: fromOrder,
+                        toOrder: toOrder,
+                    });
+                } else {
+                    const index = state.prevOrdersState.indexOf(row);
+
+                    if (row.toOrder === fromOrder) {
+                        state.prevOrdersState.splice(index, 1);
+                    } else {
+                        row.toOrder = toOrder;
+                    }
+                }
+
+                state.isEditedOrders = state.prevOrdersState.length !== 0;
             }
-        }
+        },
+        resetOrders: (state) => {
+            for (const element of state.prevOrdersState) {
+                const orderTo = state.orders.find(el => el.id === element.toOrder);
+                const orderFrom = state.orders.find(el => el.id === element.fromOrder);
+                const orderRows = orderTo?.rows;
+                const row = orderRows?.find(el => el.id === element.rowID);
+
+                if (orderTo && orderRows && orderFrom && row) {
+                    const index = orderRows.indexOf(row);
+
+                    orderFrom.rows.push(row);
+                    orderRows.splice(index, 1);
+                }
+            }
+
+            state.prevOrdersState = [];
+            state.isEditedOrders = false;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -82,6 +130,7 @@ export const dashboardSlice = createSlice({
 
 export const {
     reorderRows,
-    moveRow
+    moveRow,
+    resetOrders
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

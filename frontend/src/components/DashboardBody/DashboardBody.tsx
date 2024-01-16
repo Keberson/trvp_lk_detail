@@ -47,7 +47,7 @@ const DashboardBody: React.FC<DashboardBodyProps> = ({ orders, className }) => {
             >
                 {
                     orders.map((order) =>
-                        <OrderCard order={order}/>
+                        <OrderCard order={order} key={order.id}/>
                     )
                 }
             </DragDropContext>

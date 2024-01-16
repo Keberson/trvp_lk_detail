@@ -10,8 +10,6 @@ export interface utilsState {
     errorText: string,
     utilOrder: IOrder,
     currentDate: string,
-    prevOrdersState: IOrder[],
-    isEdited: boolean
 }
 
 const initialState: utilsState = {
@@ -22,8 +20,6 @@ const initialState: utilsState = {
     errorText: '',
     utilOrder: emptyOrder,
     currentDate: (new Date()).toLocaleDateString('ru'),
-    prevOrdersState: [],
-    isEdited: false
 }
 
 export const utilsSlice = createSlice({
@@ -55,9 +51,6 @@ export const utilsSlice = createSlice({
             tmpDate.setDate(tmpDate.getDate() + 1);
             state.currentDate = tmpDate.toLocaleDateString('ru');
         },
-        setPrevOrders: (state, payload) => {
-            state.prevOrdersState = payload.payload;
-        }
     },
 })
 
