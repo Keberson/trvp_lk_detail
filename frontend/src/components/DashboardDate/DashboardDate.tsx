@@ -17,7 +17,7 @@ const DashboardDate = () => {
     const onClick = async () => {
         dispatch(incrementDate());
         dispatch(toggleLoading());
-        await expiredOrders(moment(currentDate).format("YYYY-MM-DD"));
+        await expiredOrders(moment(currentDate, 'DD.MM.YYYY').add(1, "days").format("YYYY-MM-DD"));
         await simulate();
         dispatch(toggleLoading());
     };

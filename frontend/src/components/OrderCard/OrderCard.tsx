@@ -31,7 +31,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
 
     return (
         <Card className={"border-0 rounded-3 shadow-sm"}>
-            <Card.Header className={"d-flex p-3"}>
+            <Card.Header className={"d-flex p-3"} style={{ backgroundColor: "#C0CFB2" }}>
                 <p className={"fw-bold"}>Order ID: {order.id}</p>
                 <p className={"text-muted ms-auto"}>Date: {dateFormat}</p>
             </Card.Header>
@@ -47,7 +47,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                                         order.rows.map((row, index) =>
                                             <Draggable draggableId={row.id} index={index} key={row.id}>
                                                 {(provided) => (
-                                                    <Stack direction={"horizontal"} className={"p-2 rounded-3 border"}
+                                                    <Stack direction={"horizontal"} className={"p-2 rounded-3 border draggable-hover"}
                                                            {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}
                                                     >
                                                         <p>{row.product.name}</p>
@@ -63,17 +63,18 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                         }
 
                 </Droppable>
-                <Stack direction={"horizontal"} className={"mt-3"}>
+                <Stack direction={"horizontal"} className={"mt-3 pe-3 ps-3"}>
                     <Card.Link
-                        className={"ms-auto"}
                         onClick={onClickEdit}
-                        style={{ cursor: "pointer" }}
+                        className={"ms-auto link-dark-green-hover"}
+                        style={{ cursor: "pointer", textDecoration: "none", color: "#45624E" }}
                     >
                         Edit
                     </Card.Link>
                     <Card.Link
                         onClick={onClickDelete}
-                        style={{ cursor: "pointer" }}
+                        className={"link-dark-green-hover"}
+                        style={{ cursor: "pointer", textDecoration: "none", color: "#45624E" }}
                     >
                         Delete
                     </Card.Link>

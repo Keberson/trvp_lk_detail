@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Container} from "react-bootstrap";
 import DashboardBody from "../../components/DashboardBody/DashboardBody";
 import DashboardHeader from "../../components/DashboardHeader/DashboardHeader";
@@ -13,6 +13,7 @@ import {TError} from "../../types/TError";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {toggleModal} from "../../store/slices/utilsSlice";
+import {logout} from "../../store/slices/authSlice";
 
 const DashboardPage = () => {
     const dispatch = useAppDispatch();
@@ -24,6 +25,13 @@ const DashboardPage = () => {
     const isErrorShow: boolean = useAppSelector(state => state.utils.isErrorShow);
     const errorText: string = useAppSelector(state => state.utils.errorText);
     const modalTitle: string = useAppSelector(state => state.utils.modalTitle);
+    const errorGet = useAppSelector(state => state.dashboard.error);
+
+    useEffect(() => {
+        if (errorGet) {
+            dispatch(logout());
+        }
+    }, [dispatch, errorGet]);
 
     return (
         <>
@@ -41,8 +49,8 @@ const DashboardPage = () => {
             </ModalWindow>
 
             {isLoadingShow && <SpinnerCustom />}
-            {errorOrders && <ErrorAlert error={(errorOrders as TError).data.message}/>}
-            {errorProducts && <ErrorAlert error={(errorProducts as TError).data.message}/>}
+            {errorOrders && <ErrorAlert error={(errorOrders as TError).data ? (errorOrders as TError).data.message : "Internal error"}/>}
+            {errorProducts && <ErrorAlert error={(errorProducts as TError).data ? (errorProducts as TError).data.message : "Internal error"}/>}
             {isErrorShow && <ErrorAlert error={errorText}/>}
         </>
     );

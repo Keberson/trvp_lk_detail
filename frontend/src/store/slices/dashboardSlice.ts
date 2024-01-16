@@ -5,12 +5,14 @@ import {IProduct} from "../../types/IProduct";
 
 export interface dashboardState {
     orders: IOrder[],
-    products: IProduct[]
+    products: IProduct[],
+    error: string | undefined
 }
 
 const initialState: dashboardState = {
     orders: [],
-    products: []
+    products: [],
+    error: undefined
 }
 
 export const dashboardSlice = createSlice({
@@ -44,33 +46,35 @@ export const dashboardSlice = createSlice({
         builder
             .addMatcher(dashboardApi.endpoints.getOrders.matchFulfilled, (state, action) => {
                 state.orders = action.payload.result;
+                state.error = undefined;
             })
             .addMatcher(dashboardApi.endpoints.getOrders.matchRejected, (state, action) => {
                 if (action.payload && action.payload.status === 401) {
-                    localStorage.removeItem("jwt");
+                    state.error = 'Unauthorized';
                 }
             })
             .addMatcher(dashboardApi.endpoints.getProducts.matchFulfilled, (state, action) => {
                 state.products = action.payload.result;
+                state.error = undefined;
             })
             .addMatcher(dashboardApi.endpoints.getProducts.matchRejected, (state, action) => {
                 if (action.payload && action.payload.status === 401) {
-                    localStorage.removeItem("jwt");
+                    state.error = 'Unauthorized';
                 }
             })
             .addMatcher(dashboardApi.endpoints.createOrder.matchRejected, (state, action) => {
                 if (action.payload && action.payload.status === 401) {
-                    localStorage.removeItem("jwt");
+                    state.error = 'Unauthorized';
                 }
             })
             .addMatcher(dashboardApi.endpoints.editOrder.matchRejected, (state, action) => {
                 if (action.payload && action.payload.status === 401) {
-                    localStorage.removeItem("jwt");
+                    state.error = 'Unauthorized';
                 }
             })
             .addMatcher(dashboardApi.endpoints.deleteOrder.matchRejected, (state, action) => {
                 if (action.payload && action.payload.status === 401) {
-                    localStorage.removeItem("jwt");
+                    state.error = 'Unauthorized';
                 }
             })
     }

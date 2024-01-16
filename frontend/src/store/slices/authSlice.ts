@@ -13,7 +13,8 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logout: () => {
+        logout: (state) => {
+            state.isAuth = false;
             localStorage.removeItem("jwt");
 
             return initialState
@@ -22,14 +23,13 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(userApi.endpoints.login.matchFulfilled, (state, action) => {
-                console.log(action.payload.jwt);
                 localStorage.setItem("jwt", action.payload.jwt);
-                console.log(localStorage.getItem("jwt"));
                 state.isAuth = true;
             })
             .addMatcher(userApi.endpoints.login.matchRejected, (state) => {
                 state.isAuth = localStorage.getItem("jwt") !== null
             })
+
     }
 })
 

@@ -8,6 +8,7 @@ import {useCreateOrderMutation} from "../../services/DashboardService";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {showError, toggleLoading, toggleModal} from "../../store/slices/utilsSlice";
 import {useAppSelector} from "../../hooks/useAppSelector";
+import moment from "moment";
 
 const CreateOrder = () => {
     const products = useAppSelector(state => state.dashboard.products);
@@ -21,6 +22,7 @@ const CreateOrder = () => {
     });
     const [createOrder] = useCreateOrderMutation();
     const dispatch = useAppDispatch();
+    const currentDateString = useAppSelector(state => state.utils.currentDate);
 
 
     const onSubmit: SubmitHandler<IFormCreate> = async (formData) => {
@@ -46,6 +48,13 @@ const CreateOrder = () => {
         }
     };
 
+    const validateDate = (v: string) => {
+        const currentDate = moment(currentDateString, "DD.MM.YYYY").toDate();
+        console.log(currentDate)
+
+        return (new Date(v)).setHours(0, 0, 0, 0) >= currentDate.setHours(0, 0, 0, 0)
+    };
+
     return (
         <FormProvider {...methods}>
             <Form className={"p-2 d-flex flex-column h-100"} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -60,8 +69,7 @@ const CreateOrder = () => {
                         {...methods.register("order_date",
                             {
                                 required: true,
-                                validate: v =>
-                                    (new Date(v)).setHours(0, 0, 0, 0) >= (new Date()).setHours(0, 0, 0, 0)
+                                validate: validateDate
                             })}
                     />
                 </Form.Group>

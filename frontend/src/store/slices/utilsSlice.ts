@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {emptyOrder, IOrder} from "../../types/IOrder";
+import moment from "moment";
 
 export interface utilsState {
     isModalShow: boolean,
@@ -9,6 +10,8 @@ export interface utilsState {
     errorText: string,
     utilOrder: IOrder,
     currentDate: string,
+    prevOrdersState: IOrder[],
+    isEdited: boolean
 }
 
 const initialState: utilsState = {
@@ -18,7 +21,9 @@ const initialState: utilsState = {
     isErrorShow: false,
     errorText: '',
     utilOrder: emptyOrder,
-    currentDate: (new Date()).toLocaleDateString('ru')
+    currentDate: (new Date()).toLocaleDateString('ru'),
+    prevOrdersState: [],
+    isEdited: false
 }
 
 export const utilsSlice = createSlice({
@@ -43,12 +48,15 @@ export const utilsSlice = createSlice({
             state.errorText = '';
         },
         setUtilOrder: (state, payload) => {
-            state.utilOrder = payload.payload
+            state.utilOrder = payload.payload;
         },
         incrementDate: (state) => {
-            const tmpDate = new Date(state.currentDate);
+            const tmpDate = moment(state.currentDate, "DD.MM.YYYY").toDate();
             tmpDate.setDate(tmpDate.getDate() + 1);
             state.currentDate = tmpDate.toLocaleDateString('ru');
+        },
+        setPrevOrders: (state, payload) => {
+            state.prevOrdersState = payload.payload;
         }
     },
 })

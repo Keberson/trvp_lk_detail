@@ -5,12 +5,13 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 const AuthWrap = () => {
     const isAuth = useAppSelector(state => state.auth.isAuth);
     const navigate = useNavigate();
+    const jwt = localStorage.getItem("jwt");
 
     useEffect(() => {
-        if (!isAuth || localStorage.getItem("jwt") === null) {
+        if (!isAuth || jwt === null) {
             navigate("/denied");
         }
-    }, [isAuth, navigate]);
+    }, [isAuth, jwt, navigate]);
 
     return (
         <>
