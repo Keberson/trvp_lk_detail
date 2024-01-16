@@ -84,6 +84,10 @@ export const dashboardSlice = createSlice({
             state.rowsEdit = [];
             state.isEditedOrders = false;
         },
+        saveOrders: (state) => {
+            state.isEditedOrders = false;
+            state.rowsEdit = [];
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -141,6 +145,7 @@ export const dashboardSlice = createSlice({
 export const {
     reorderRows,
     moveRow,
-    resetOrders
+    resetOrders,
+    saveOrders
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

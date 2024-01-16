@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Stack} from "react-bootstrap";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {resetOrders} from "../../store/slices/dashboardSlice";
+import {resetOrders, saveOrders} from "../../store/slices/dashboardSlice";
 import {useDeleteOrderMutation, useEditRowsMutation} from "../../services/DashboardService";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {toggleLoading} from "../../store/slices/utilsSlice";
@@ -21,6 +21,7 @@ const DashboardTitleButtons = () => {
             await deleteOrder(order.id);
         }
 
+        dispatch(saveOrders());
         dispatch(toggleLoading());
     };
 
