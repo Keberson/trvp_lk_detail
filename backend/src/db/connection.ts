@@ -153,7 +153,7 @@ class Connection {
     async deleteExpiredOrders(date?: string): Promise<void[]> {
         const query: string = `
             DELETE FROM order_info
-            WHERE order_date<'${date ? date : 'NOW()'}';
+            WHERE order_date<='${date ? date : 'NOW()'}';
         `
 
         return (await this._connection.query(query))
