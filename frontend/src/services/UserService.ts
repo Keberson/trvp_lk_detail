@@ -5,7 +5,7 @@ import ILoginResponse from "../types/ILoginResponse";
 export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.API_URL}/login`,
+        baseUrl: 'http://localhost:5000/api/login',
         credentials: 'same-origin'
     }),
     endpoints: (build) => ({
