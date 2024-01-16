@@ -177,4 +177,4 @@ class Connection {
     }
 }
 
-export default new Connection('config.json');
+export default new Connection('config_db.json');
